@@ -8,21 +8,25 @@ var rename = require('gulp-rename');
 var sh = require('shelljs');
 
 var paths = {
-  sass: ['./scss/**/*.scss']
+  sass: ['./www/app/*.scss']
 };
 
-gulp.task('default', ['sass']);
-
+gulp.task('default', ['sass','fonts']);
+gulp.task('fonts',function(done){
+  gulp.src('./www/lib/ionic/fonts/**.*')
+    .pipe(gulp.dest('./www/assets/css/'))
+    .on('end',done);
+});
 gulp.task('sass', function(done) {
-  gulp.src('./scss/ionic.app.scss')
+  gulp.src('./www/app/main.scss')
     .pipe(sass())
     .on('error', sass.logError)
-    .pipe(gulp.dest('./www/css/'))
+    .pipe(gulp.dest('./www/assets/css/'))
     .pipe(minifyCss({
       keepSpecialComments: 0
     }))
     .pipe(rename({ extname: '.min.css' }))
-    .pipe(gulp.dest('./www/css/'))
+    .pipe(gulp.dest('./www/assets/css/'))
     .on('end', done);
 });
 
