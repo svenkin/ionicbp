@@ -7,10 +7,12 @@
 angular.module('app', [
     'ionic',
     'Requestfactory',
+    'angular-momentjs',
     'app.menu',
     'app.login',
     'app.catalog',
     'app.catalog.detail',
+    'app.shoppingCart',
     'app.dashboard',
     'app.test',
     'jett.ionic.content.banner',
@@ -18,7 +20,8 @@ angular.module('app', [
     'highcharts-ng'
   ])
 
-  .run(function ($ionicPlatform) {
+  .run(function ($ionicPlatform,$moment) {
+    $moment.locale('de');
     $ionicPlatform.ready(function () {
       // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
       // for form inputs)

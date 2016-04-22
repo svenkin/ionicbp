@@ -8,6 +8,10 @@
   },
   "dependencies": {
     "angular-local-storage": "^0.2.7",
+<<<<<<< HEAD
     "highcharts": "^4.2.4"
+=======
+    "angular-momentjs": "^0.2.2"
+>>>>>>> 4c96226f8376fb95f98f27cd2aca381ac4ae7dec
   }
 }

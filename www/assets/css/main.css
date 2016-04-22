@@ -9730,3 +9730,10 @@ a.button {
   opacity: 0;
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
+
+.detail-image {
+  margin-top: 10px;
+  margin-left: 10px; }
+
+#dashlist li {
+  padding: 10px; }

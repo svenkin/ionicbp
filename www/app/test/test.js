@@ -19,21 +19,25 @@ angular.module('app.test', []).config(function ($stateProvider) {
     //This is not a highcharts object. It just looks a little like one!
     $scope.chartConfig = {
       options: {
-        chart: {
-          zoomType: 'x'
+        spacing: [0,0,0,0]
+      },
+
+      yAxis:
+      {
+        title:{
+           text: null
         },
-        rangeSelector: {
-          enabled: true
+        labels: {
+          align: 'left',
+          x: 0,
+          y: -3
         },
-        navigator: {
-          enabled: true
-        }
       },
       series: [],
       title: {
-        text: 'Hello'
+        text: null
       },
-      useHighStocks: true
+     // useHighStocks: true
     }
 
     $scope.chartConfig.series.push({

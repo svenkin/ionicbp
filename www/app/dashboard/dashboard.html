@@ -1,11 +1,22 @@
 <ion-view hide-back-button="true">
     <ion-content>
+       <ion-refresher
+    pulling-text="Pull to refresh Dashboard ..."
+    on-refresh="refresh()">
+  </ion-refresher>
         <h1>Dashboard</h1>
-        <button ng-click="test()">Test it</button>
-        <ul class="list">
-            <li class="item" ng-repeat="orders in data.orders">
-                {{orders.customer.companyName}}
+        <div class="card" ng-show="data.orders.length > 0">
+            <div class="item item-text-wrap">
+             <h2>Ihr letzten 5 Bestellungen</h2>
+              <ul class="list" id="dashlist">
+            <li class="item" ng-repeat="orders in data.orders" >
+                <h3>{{orders.customer.companyName}}</h3>
+                <p>{{orders.orderDate | date : 'short'}}</p>
+                <span class="badge badge-assertive">{{orders.networth}}€</span>
             </li>
         </ul>
+            </div>
+        </div>
+        
     </ion-content>
 </ion-view>
