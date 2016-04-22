@@ -41,7 +41,7 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             $scope.data.orders = [];
             Orders.getAllOrders(10002).then(function (ord) {
                 var ordered = $filter('orderBy')(ord, 'orderDate', true);
-                $scope.data.orders = ordered.splice(0, 5);
+                $scope.data.orders = ordered.splice(ordered.length-5, 5);
                 $timeout(function () {
                     $scope.$broadcast('scroll.refreshComplete');
                 }, 500)

@@ -6,8 +6,11 @@ angular.module('app.menu', []).config(function ($stateProvider) {
             controller: 'AppCtrl'
         })
     })
-    .controller('AppCtrl', function ($scope, $log, localStorageService, $ionicContentBanner, $state, $ionicSideMenuDelegate) {
-        
+    .controller('AppCtrl', function ($scope, $log, localStorageService, $ionicContentBanner, $state, $rootScope, shoppingCart) {
+        $rootScope.$on('item-added-cart',
+            function () {
+                $scope.price = shoppingCart.getFullPrice();
+            });
         $scope.logout = function () {
             localStorageService.set('user', '');
             $ionicContentBanner.show({
