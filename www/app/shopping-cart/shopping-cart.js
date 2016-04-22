@@ -9,6 +9,16 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
       }
     })
   })
-  .controller('ShoppingCartCtrl', function ($scope, $log) {
-
+  .controller('ShoppingCartCtrl', function ($scope, $log, localStorageService, shoppingCart) {
+    $scope.price = shoppingCart.getFullPrice();
+    $scope.cart = localStorageService.get('shopping-cart');
+    $scope.changeQuantity = function () {
+      localStorageService.set('shopping-cart', $scope.cart);
+      $scope.price = shoppingCart.getFullPrice();
+    };
+    $scope.remove = function (id) {
+      delete $scope.cart[id];
+      localStorageService.set('shopping-cart', $scope.cart);
+      $scope.price = shoppingCart.getFullPrice();
+    }
   });

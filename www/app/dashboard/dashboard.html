@@ -1,10 +1,10 @@
-<ion-view hide-back-button="true">
+
+  <ion-view hide-back-button="true" title="Dashboard">
     <ion-content>
        <ion-refresher
     pulling-text="Pull to refresh Dashboard ..."
     on-refresh="refresh()">
   </ion-refresher>
-        <h1>Dashboard</h1>
         <div class="card" ng-show="data.orders.length > 0">
             <div class="item item-text-wrap">
              <h2>Ihr letzten 5 Bestellungen</h2>

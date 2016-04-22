@@ -16,24 +16,34 @@ angular.module('app.test', []).config(function ($stateProvider) {
       id:"1",
       data: []
     }
+    var lastDate;
     for(var i = 0; i<rawData.length; i++){
-      var date = rawData[i].orderDateRaw;
-      blub.data.push([date,rawData[i].networth]);
+      var date = rawData[i].orderDateRaw.toString().replace(/[-TZ.:]/g,"");
+
+      if(date==lastDate)
+      {
+        blub.data[blub.data.length-1][1]+=rawData[i].networth;
+        blub.data[blub.data.length-1][2]++;
+      }else{
+        blub.data.push([date,rawData[i].networth, 1]);
+        lastDate = date;
+      }
     }
     console.log(blub);
     //This is not a highcharts object. It just looks a little like one!
     $scope.chartConfig = {
-      options: {
-        zoomType: "x"
-      },
-      charts:
-      {
-        panning:true
-      },
+      //chart: {
+      //  zoomType: 'x'
+      //},
       xAxis:
       {
         type: 'datetime',
-        tickInterval: 20
+        dateTimeLabelFormats: {
+          month:'%Y KW %e'
+        },
+        tickInterval: 3,
+        min:0,
+        max:9
       },
       yAxis:
       {

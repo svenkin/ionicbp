@@ -1,4 +1,4 @@
-angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFactory, OrderMapping, localStorageService, $timeout) {
+angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFactory, OrderMapping, localStorageService, $timeout,$filter) {
     var baseUrl = BaseUrl;
     var service = {};
     var itemList = [];
@@ -79,8 +79,7 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
             newOrder.networth = ges;
             newOrders.push(newOrder);
         })
-        $log.log(newOrders);
-        return newOrders;
+        return $filter('orderBy')(newOrders, 'orderDateRaw', true);
     }
 
     service.getItemsById = function (id) {

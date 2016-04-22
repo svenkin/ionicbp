@@ -16,13 +16,18 @@ angular.module('app.catalog.detail', []).config(function ($stateProvider) {
 
     })
   })
-  .controller('DetailCtrl', function ($scope, $log, $stateParams, localStorageService, shoppingCart) {
+  .controller('DetailCtrl', function ($scope, $log, $stateParams, localStorageService, shoppingCart, $rootScope, $ionicContentBanner) {
     console.log($stateParams);
     var id = $stateParams.id;
     $scope.data = localStorageService.get('Items')[id];
     console.log($scope.data);
     $scope.toShoppingCart = function () {
       shoppingCart.addItem($scope.data, 1);
-      console.log(localStorageService.get('shopping-cart')[id].quantity);
+      $rootScope.$broadcast('item-added-cart');
+      $ionicContentBanner.show({
+        autoClose: 3000,
+        text: ['Element zum Warenkorb hinzugefügt'],
+        type: 'info'
+      });
     };
   });

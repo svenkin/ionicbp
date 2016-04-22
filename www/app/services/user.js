@@ -16,7 +16,7 @@ angular.module('app').factory('UserData', function ($log, $q, UserMapping, Reque
                     }
                 })
                 successLogin ? q.resolve({
-                    data: mbById
+                    data: mbById.data[0]
                 }) : q.reject('couldnt login');
             }, function (err) {
                 q.reject({
