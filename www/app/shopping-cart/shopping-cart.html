@@ -1,5 +1,20 @@
 <ion-view hide-back-button="true">
   <ion-content>
-
+    <ion-list>
+      <ion-item ng-repeat="item in cart">
+        <ion-option-button class="button-assertive"
+                           ng-click="remove(item.itemId)">
+          <i class="icon ion-ios-trash-outline"></i>
+        </ion-option-button>
+        ID: {{ item.itemId }}
+        <input type="number" ng-model="item.quantity" ng-change="changeQuantity(item.itemId, item.quantity)">
+        Preis: {{ item.price * item.quantity }}€
+      </ion-item>
+    </ion-list>
+    <div class="card">
+      <div class="item item-text-wrap">
+        Gesamtpreis: {{ price }}€
+      </div>
+    </div>
   </ion-content>
 </ion-view>
