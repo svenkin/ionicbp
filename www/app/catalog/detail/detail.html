@@ -1,4 +1,4 @@
-<ion-view>
+<ion-view title="Detail {{ items.itemId }}">
   <ion-content>
     <img ng-src="../../assets/img/{{ items.pictureId }}.png" class="detail-image"/><br>
     <div class="card">
@@ -24,6 +24,6 @@
         Kategorie: {{ items.productGroup }}
       </div>
     </div>
-    <button class="button button-block button-energized" ng-click="toShoppingCart()" ng-show="!data.isFromDashboard">In den Warenkorb</button>
+    <button class="button button-block button-energized" ng-click="toShoppingCart()">In den Warenkorb</button>
   </ion-content>
 </ion-view>

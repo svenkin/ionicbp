@@ -13,15 +13,8 @@ angular.module('app.catalog.detail', []).config(function ($stateProvider) {
       }
     })
   })
-  .controller('DetailCtrl', function ($scope, $log, $stateParams, localStorageService, shoppingCart, $rootScope, $ionicContentBanner) {
-    $scope.data = {};
+  .controller('DetailCtrl', function ($scope, $log, localStorageService, shoppingCart, $ionicContentBanner, $stateParams, $rootScope) {
     var id = $stateParams.id;
-    $scope.$watchCollection(function(){
-      return $stateParams;
-    }, function(){
-      $log.info("State params have been updated", $stateParams.isFromDashboard);
-      $scope.data.isFromDashboard = $stateParams.isFromDashboard;
-    });
     $scope.items = localStorageService.get('Items')[id];
     $scope.toShoppingCart = function () {
       shoppingCart.addItem($scope.items, 1);

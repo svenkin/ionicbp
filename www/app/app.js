@@ -19,35 +19,35 @@ angular.module('app', [
     'LocalStorageModule'
   ])
 
-.run(function ($ionicPlatform, $moment, localStorageService, $state) {
+  .run(function ($ionicPlatform, $moment, localStorageService, $state) {
     $moment.locale('de');
 
     $ionicPlatform.ready(function () {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        if (window.cordova && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            cordova.plugins.Keyboard.disableScroll(true);
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if (window.cordova && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
 
-        }
-        if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
-        }
-        var user = localStorageService.get('user') || 'fail';
-        if (user !== 'fail') {
-            $state.go('app.dashboard')
-        } else {
-            $state.go('login');
-            localStorageService.clearAll();
-        }
+      }
+      if (window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        StatusBar.styleDefault();
+      }
+      var user = localStorageService.get('user') || 'fail';
+      if (user !== 'fail') {
+        $state.go('app.dashboard')
+      } else {
+        $state.go('login');
+        localStorageService.clearAll();
+      }
     });
-})
+  })
 
-.config(function ($stateProvider, $urlRouterProvider, localStorageServiceProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, localStorageServiceProvider) {
 
-        localStorageServiceProvider.setPrefix('ZAK');
-        // if none of the above states are matched, use this as the fallback
-        $urlRouterProvider.otherwise('/app/dashboard');
-    })
-    .constant('BaseUrl', 'http://zakitchallenge.azurewebsites.net/');
+    localStorageServiceProvider.setPrefix('ZAK');
+    // if none of the above states are matched, use this as the fallback
+    $urlRouterProvider.otherwise('/app/dashboard');
+  })
+  .constant('BaseUrl', 'http://zakitchallenge.azurewebsites.net/');
