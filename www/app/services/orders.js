@@ -1,4 +1,4 @@
-angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFactory, OrderMapping, localStorageService) {
+angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFactory, OrderMapping, localStorageService, $timeout) {
     var baseUrl = BaseUrl;
     var service = {};
     var itemList = [];
@@ -9,7 +9,7 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
             $log.log(ord);
             service.getAllItems().then(function (suc) {
                 var merged = service.mergeOrderAndItems(ord.data);
-                localStorageService.set('orders',merged);
+                localStorageService.set('orders', merged);
                 q.resolve(merged);
             }, function (err) {
                 q.reject(err);
@@ -31,7 +31,9 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
                 }
             }
         }).then(function (suc) {
+            $log.log('item',suc);
             OrderMapping.mapOrders(suc.data).then(function (items) {
+                
                 q.resolve({
                     data: items.data,
                     status: suc.response.status
@@ -62,18 +64,22 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
     }
 
     service.mergeOrderAndItems = function (orders) {
+        var q = $q.defer();
         var newOrders = [];
         angular.forEach(orders, function (order) {
             var newOrder = order;
+            var ges = 0;
             angular.forEach(order.items, function (item) {
                 newOrder.items[item.itemId] = localStorageService.get('Items')[item.itemId];
                 newOrder.items[item.itemId].price = item.price;
                 newOrder.items[item.itemId].quantity = item.quantity;
-                newOrder.networth = item.price * item.quantity;
+                newOrder.items[item.itemId].networth = item.price * item.quantity;
+                ges += item.price * item.quantity;
             })
-
-            newOrders.push(newOrder)
+            newOrder.networth = ges;
+            newOrders.push(newOrder);
         })
+        $log.log(newOrders);
         return newOrders;
     }
 
@@ -98,7 +104,8 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
 
     return service;
 });
-angular.module('app').factory('OrderMapping', function ($log, $q, Customer) {
+angular.module('app').factory('OrderMapping', function ($log, $q, Customer, $moment) {
+
     var service = {}
     service.mapOrders = function (orders) {
         var q = $q.defer();
@@ -107,7 +114,8 @@ angular.module('app').factory('OrderMapping', function ($log, $q, Customer) {
             var mappedOrder = {
                 customerId: value.CustomerID,
                 fieldWorkerId: value.FieldWorkerID,
-                orderDate: new Date(value.OrderDate),
+                orderDate: $moment(value.OrderDate, 'YYYYMMDD').fromNow(),
+                orderDateRaw : new Date(value.OrderDate),
                 orderId: value.OrderID
             };
             Customer.getCustomerById(mappedOrder.customerId).then(function (suc) {
