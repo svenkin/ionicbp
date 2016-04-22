@@ -9,4 +9,15 @@
         width: 100%;
         text-align: right;
     }
+    #gesKosten{
+        float: right;
+        margin-right: -10px;
+        #ges{
+            text-decoration: underline;
+        }
+    }
+    #itemId{
+        float: right;
+        margin-right: 5px;
+    }
 }

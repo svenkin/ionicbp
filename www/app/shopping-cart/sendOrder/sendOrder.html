@@ -12,8 +12,10 @@
                 <ul class="list" id="dashlist">
                     <li class="item" ng-repeat="data in data.cart">
                         <img ng-src="../assets/img/{{ data.pictureId }}.png" />
-                        <span> ID: {{ data.itemId }}</span>
-                        <br> Kategorie: {{ data.productGroup }} <span>{{data.price}} X {{data.quantity}} = {{data.price * data.quantity}}€</span>
+                        <div id="itemId"> ID: {{ data.itemId }}</div>
+                        <span id="kateg"> Kategorie: {{ data.productGroup }}</span> <span id="gesKosten">
+                        {{data.price}}€ X {{data.quantity}}stk = <span id="ges">{{data.price * data.quantity}}€</span></span>
+                        <div style="clear:both"></div>
                     </li>
                     <li><span style="float:right;text-decoration: underline">Gesamtkosten: {{data.price}}€</span></li>
                 </ul>
