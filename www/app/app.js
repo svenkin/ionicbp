@@ -12,6 +12,7 @@ angular.module('app', [
     'app.login',
     'app.catalog',
     'app.catalog.detail',
+    'app.dashboard.detail',
     'app.shoppingCart',
     'app.dashboard',
     'jett.ionic.content.banner',

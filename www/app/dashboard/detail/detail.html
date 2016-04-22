@@ -1,0 +1,22 @@
+<ion-view>
+  <ion-content>
+    <div class="card">
+      <div class="item item-text-wrap">
+        Bestellungs-ID: {{ data.order.orderId }}
+      </div>
+      <div class="item item-text-wrap">
+        Kunden-ID: {{ data.order.customerId }}
+      </div>
+      <div class="item item-text-wrap">
+        Außendienstmitarbeiter-ID: {{ data.order.fieldWorkerId }}
+      </div>
+      <div class="item item-text-wrap">
+        Aufgegeben: {{ data.order.orderDate }}
+      </div>
+      <div class="item item-text-wrap" ng-repeat="item in data.order.items" ui-sref="app.catalog-detail({id: item.itemId})">
+        {{ item.quantity }}x Artikel {{ item.itemId }}<br>
+        Preis: {{ item.quantity * item.price }}€
+      </div>
+    </div>
+  </ion-content>
+</ion-view>

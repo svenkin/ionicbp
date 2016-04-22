@@ -1,5 +1,5 @@
 angular.module('app.catalog.detail', []).config(function ($stateProvider) {
-    $stateProvider.state('app.detail', {
+    $stateProvider.state('app.catalog-detail', {
       url: '/catalog/detail/:id',
       views: {
         'menuContent': {
