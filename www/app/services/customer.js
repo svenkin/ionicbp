@@ -11,6 +11,7 @@ angular.module('app').factory('Customer', function ($log, $q, RequestFactory, Ba
                 }
             }
         }).then(function (customer) {
+          console.log(customer);
             q.resolve(CustomerMapping.mapCustomer(customer.data[0]));
         }, function (err) {
             q.reject(err);

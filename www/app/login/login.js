@@ -6,6 +6,8 @@ angular.module('app.login', []).config(function ($stateProvider) {
     })
   })
   .controller('LoginCtrl', function ($scope, $log, UserData, $ionicLoading, $ionicContentBanner, $state, localStorageService, $ionicSideMenuDelegate) {
+    $scope.data={};
+    $scope.data.choice = 'fieldWorker';
     $scope.userData = {
       name: "",
       id: ""
@@ -15,19 +17,20 @@ angular.module('app.login', []).config(function ($stateProvider) {
       $ionicLoading.show({
         template: 'Loading...'
       });
-      console.log($scope.userData.id, $scope.userData.name);
-      UserData.login($scope.userData.id, $scope.userData.name).then(function (suc) {
-        $ionicLoading.hide();
-        localStorageService.set('user', suc.data);
-        $state.go('app.dashboard');
-        $ionicSideMenuDelegate.canDragContent(true);
-      }, function (error) {
-        $ionicLoading.hide();
-        $ionicContentBanner.show({
-          autoClose: 3000,
-          text: ['Fehler beim Login!'],
-          type: 'error'
+        UserData.login($scope.userData.id, $scope.userData.name, $scope.data.choice).then(function (suc) {
+          $ionicLoading.hide();
+          localStorageService.set('user', suc.data);
+          $scope.data.choice == 'fieldWorker' ? localStorageService.set('role', 'fieldWorker') : localStorageService.set('role', 'customer');
+          $state.go('app.dashboard');
+          $ionicSideMenuDelegate.canDragContent(true);
+        }, function (error) {
+          $ionicLoading.hide();
+          $ionicContentBanner.show({
+            autoClose: 3000,
+            text: ['Fehler beim Login: ' + error.data],
+            type: 'error'
+          });
         });
-      })
+        $ionicLoading.hide();
     };
   });

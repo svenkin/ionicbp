@@ -1,29 +1,29 @@
 <ion-view>
   <ion-content>
-    <img ng-src="../../assets/img/{{ data.pictureId }}.png" class="detail-image"/><br>
+    <img ng-src="../../assets/img/{{ items.pictureId }}.png" class="detail-image"/><br>
     <div class="card">
       <div class="item item-text-wrap">
-        ID: {{ data.itemId }}
+        ID: {{ items.itemId }}
       </div>
       <div class="item item-text-wrap">
-        Preis: {{ data.price }}€
+        Preis: {{ items.price }}€
       </div>
       <div class="item item-text-wrap">
-        Material: {{ data.material }}
+        Material: {{ items.material }}
       </div>
       <div class="item item-text-wrap">
-        Mantel: {{ data.coating }}
+        Mantel: {{ items.coating }}
       </div>
       <div class="item item-text-wrap">
-        Durchmesser: {{ data.diameter }}
+        Durchmesser: {{ items.diameter }}
       </div>
       <div class="item item-text-wrap">
-        Internal Cooling: {{ data.internalCooling ? 'Unterstützt' : 'Nicht unterstützt' }}
+        Internal Cooling: {{ items.internalCooling ? 'Unterstützt' : 'Nicht unterstützt' }}
       </div>
       <div class="item item-text-wrap">
-        Kategorie: {{ data.productGroup }}
+        Kategorie: {{ items.productGroup }}
       </div>
     </div>
-    <button class="button button-block button-energized" ng-click="toShoppingCart()">In den Warenkorb</button>
+    <button class="button button-block button-energized" ng-click="toShoppingCart()" ng-show="!data.isFromDashboard">In den Warenkorb</button>
   </ion-content>
 </ion-view>

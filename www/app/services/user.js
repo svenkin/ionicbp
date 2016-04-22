@@ -1,36 +1,59 @@
-angular.module('app').factory('UserData', function ($log, $q, UserMapping, RequestFactory,BaseUrl) {
+angular.module('app').factory('UserData', function ($log, $q, UserMapping, RequestFactory,BaseUrl, Customer, CustomerMapping) {
     var service = {};
     var baseUrl = BaseUrl;
 
     //Try to get mitarbeiterlist by last name, if succesfull get mitarbeiter by id, if succesfull compare if object by id is in list by         last name -> if true successfully logged in
-    service.login = function (id, name) {
+    service.login = function (id, name, role) {
         var q = $q.defer();
-        service.getMbByLastName(name).then(function (mbsByName) {
+        if (role == 'fieldWorker') {
+          service.getMbByLastName(name).then(function (mbsByName) {
             service.getMbById(id).then(function (mbById) {
-                var successLogin = false;
-                angular.forEach(mbsByName.data, function (value) {
-                    if (angular.equals(value, mbById.data[0])) {
-                        successLogin = true;
-                    } else {
-                        $log.log(value, mbById.data[0])
-                    }
-                })
-                successLogin ? q.resolve({
-                    data: mbById.data[0]
-                }) : q.reject('couldnt login');
+              var successLogin = false;
+              angular.forEach(mbsByName.data, function (value) {
+                if (angular.equals(value, mbById.data[0])) {
+                  successLogin = true;
+                } else {
+                  $log.log(value, mbById.data[0])
+                }
+              });
+              successLogin ? q.resolve({
+                data: mbById.data[0]
+              }) : q.reject('couldnt login');
             }, function (err) {
-                q.reject({
-                    data: 'Error'
-                })
+              q.reject({
+                data: 'Error'
+              })
             });
-        }, function (err) {
+          }, function (err) {
             q.reject({
-                data: 'Last Name not found'
+              data: 'Last Name not found'
             })
-        });
+          });
+        } else if (role == 'customer') {
+          Customer.getCustomerById(id).then(function (customer) {
+            var successLogin = false;
+            console.log(customer);
+            angular.forEach(customer.data, function (value) {
+              if (angular.equals(value, customer.data[0])) {
+                successLogin = true;
+              } else {
+                $log.log(value, customer.data[0])
+              }
+            });
+            successLogin ? q.resolve({
+              data: customer.data[0]
+            }) : q.reject({
+              data: 'Error'
+            });
+          }, function (err) {
+            q.reject({
+              data: 'Error'
+            })
+          });
+        }
         return q.promise;
-    }
-    //Get Außendienstmitarbeiter by id 
+    };
+    //Get Außendienstmitarbeiter by id
     service.getMbById = function (id) {
         var q = $q.defer();
         RequestFactory.get(baseUrl + 'api/FieldWorker', {
@@ -47,9 +70,9 @@ angular.module('app').factory('UserData', function ($log, $q, UserMapping, Reque
                 })
             }, function (err) {
                 q.reject(err);
-            })
+            });
         return q.promise;
-    }
+    };
 
     service.getMbByLastName = function (lName) {
         var q = $q.defer();
@@ -68,9 +91,9 @@ angular.module('app').factory('UserData', function ($log, $q, UserMapping, Reque
                 },
                 function (err) {
                     q.reject(err);
-                })
+                });
         return q.promise;
-    }
+    };
     return service;
 });
 angular.module('app').factory('UserMapping', function ($log) {
@@ -88,10 +111,10 @@ angular.module('app').factory('UserMapping', function ($log) {
                 postCode: value.PostCode,
                 saleReserve: value.SaleReserve,
                 street: value.Street
-            }
+            };
             mappedObj.push(tmpObj);
-        })
+        });
         return mappedObj;
-    }
+    };
     return service;
-})
+});
