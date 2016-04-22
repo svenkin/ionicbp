@@ -9,9 +9,9 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             }
         })
     })
-    .controller('DashboardCtrl', function ($scope, $log, UserData) {
+    .controller('DashboardCtrl', function ($scope, $log, UserData,Orders) {
         $scope.test = function () {
-            UserData.login(10002, 'Brown').then(function (suc) {
+            Orders.getOrdersByMbid(10002).then(function (suc) {
                 $log.log('Success', suc);
             }, function (err) {
                 $log.log(err);

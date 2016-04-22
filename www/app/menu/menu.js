@@ -7,5 +7,5 @@ angular.module('app.menu',[]).config(function ($stateProvider) {
   })
 })
 .controller('AppCtrl', function ($scope, $log) {
-
+    
 });

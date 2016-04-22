@@ -1,6 +1,6 @@
-angular.module('app').factory('UserData', function ($log, $q, UserMapping, RequestFactory) {
+angular.module('app').factory('UserData', function ($log, $q, UserMapping, RequestFactory,BaseUrl) {
     var service = {};
-    var baseUrl = 'http://zakitchallenge.azurewebsites.net/';
+    var baseUrl = BaseUrl;
 
     //Try to get mitarbeiterlist by last name, if succesfull get mitarbeiter by id, if succesfull compare if object by id is in list by         last name -> if true successfully logged in
     service.login = function (id, name) {
