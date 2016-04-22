@@ -1,4 +1,4 @@
-<ion-view hide-back-button="true">
+<ion-view hide-back-button="true" title="Einkaufswagen">
   <ion-content>
     <ion-list>
       <ion-item ng-repeat="item in cart">
@@ -12,8 +12,8 @@
       </ion-item>
     </ion-list>
     <div class="card">
-      <div class="item item-text-wrap">
-        Gesamtpreis: {{ price }}€
+      <div class="item item-text-wrap"  ng-click="sendOrder()">
+        Gesamtpreis: {{ price }}€   <i class="ion-android-cart"></i>
       </div>
     </div>
   </ion-content>
