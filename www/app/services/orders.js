@@ -118,8 +118,6 @@ angular.module('app').factory('OrderMapping', function ($log, $q, Customer, $mom
             };
             Customer.getCustomerById(mappedOrder.customerId).then(function (suc) {
                 mappedOrder.customer = suc;
-
-
             }, function (err) {
                 q.reject(err);
             })
