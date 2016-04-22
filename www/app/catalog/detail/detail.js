@@ -16,6 +16,9 @@ angular.module('app.catalog.detail', []).config(function ($stateProvider) {
 
     })
   })
-  .controller('DetailCtrl', function ($scope, $log, $stateParams) {
+  .controller('DetailCtrl', function ($scope, $log, $stateParams, localStorageService) {
     console.log($stateParams);
+    var id = $stateParams.id;
+    $scope.data = localStorageService.get('Items')[id];
+    console.log($scope.data);
   });

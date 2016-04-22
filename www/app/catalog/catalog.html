@@ -2,7 +2,7 @@
   <ion-content>
     <ion-list>
       <ion-item ng-repeat="product in allProducts" ui-sref="app.detail({id: product.itemId})">
-        <img src="../assets/img/{{ product.pictureId }}.png"/><br>
+        <img ng-src="../assets/img/{{ product.pictureId }}.png"/><br>
         ID: {{ product.itemId }}<br>
         Kategorie: {{ product.productGroup }}
         <ion-option-button class="button-positive"
