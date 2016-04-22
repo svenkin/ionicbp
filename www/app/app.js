@@ -8,7 +8,7 @@ angular.module('app', [
     'ionic',
     'Requestfactory',
     'app.menu',
-    //'app.login',
+    'app.login',
     'app.catalog',
     'app.catalog.detail',
     'app.dashboard',

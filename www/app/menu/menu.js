@@ -14,7 +14,7 @@ angular.module('app.menu',[]).config(function ($stateProvider) {
       text: ['Erfolgreich ausgeloggt!'],
       type: 'info'
     });
-    $state.go('app.login');
+    $state.go('login');
   }
 
 });

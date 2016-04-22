@@ -1,19 +1,16 @@
-angular.module('login', []).config(function ($stateProvider) {
+angular.module('app.login', []).config(function ($stateProvider) {
     $stateProvider.state('login', {
       url: '/login',
-      views: {
-        'menuContent': {
-          templateUrl: 'app/login/login.html',
-          controller: 'LoginCtrl'
-        }
-      }
+      templateUrl: 'app/login/login.html',
+      controller: 'LoginCtrl'
     })
   })
-  .controller('LoginCtrl', function ($scope, $log, UserData, $ionicLoading, $ionicContentBanner, $state, localStorageService) {
+  .controller('LoginCtrl', function ($scope, $log, UserData, $ionicLoading, $ionicContentBanner, $state, localStorageService, $ionicSideMenuDelegate) {
     $scope.userData = {
       name: "",
       id: ""
     };
+    $ionicSideMenuDelegate.canDragContent(false);
     $scope.login = function () {
       $ionicLoading.show({
         template: 'Loading...'
@@ -23,6 +20,7 @@ angular.module('login', []).config(function ($stateProvider) {
         $ionicLoading.hide();
         localStorageService.set('user', suc.data);
         $state.go('app.dashboard');
+        $ionicSideMenuDelegate.canDragContent(true);
       }, function (error) {
         $ionicLoading.hide();
         $ionicContentBanner.show({
