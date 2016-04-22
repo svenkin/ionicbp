@@ -8,6 +8,7 @@ angular.module('app', [
   'ionic',
   'Requestfactory',
   'app.menu',
+    'app.login',
   'app.dashboard'
   ])
 
