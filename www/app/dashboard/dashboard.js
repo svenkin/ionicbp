@@ -9,22 +9,28 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             }
         })
     })
-    .controller('DashboardCtrl', function ($scope, $log, UserData, Orders, Customer, $filter, $ionicLoading, $timeout,newOrder,localStorageService) {
+    .controller('DashboardCtrl', function ($scope, $log, UserData, Orders, Customer, $filter, $ionicLoading, $timeout, newOrder, localStorageService, $state,$rootScope) {
+        $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+            console.log(from);
+            if (from.name === 'login') {
+                loadData();
+            }
+        });
         $scope.data = {};
-//        (function(){
-//            newOrder.send(20010).then(function(){
-//                
-//            },function(){
-//                
-//            })
-//        })();
-    
-        (function(){
-             $ionicLoading.show({
+        //        (function(){
+        //            newOrder.send(20010).then(function(){
+        //                
+        //            },function(){
+        //                
+        //            })
+        //        })();
+
+        function loadData() {
+            $ionicLoading.show({
                 template: 'Loading...'
             });
-//            
-//            Customer.getCustomerById(20002);
+            //            
+            //            Customer.getCustomerById(20002);
             var id = localStorageService.get('user').fieldWorkerId || 'fail';
             Orders.getAllOrders(id).then(function (ord) {
                 var ordered = $filter('orderBy')(ord, 'orderId', true);
@@ -38,8 +44,9 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
                 $log.log(err);
                 $ionicLoading.hide();
             })
-        })();
-    
+        };
+        loadData();
+
         $scope.refresh = function () {
             var id = localStorageService.get('user').fieldWorkerId || 'fail';
             $scope.data.orders = [];
