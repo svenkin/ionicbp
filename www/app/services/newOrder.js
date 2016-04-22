@@ -6,7 +6,7 @@ angular.module('app').factory('newOrder', function ($q,$log,BaseUrl, RequestFact
         var order = localStorageService.get('shopping-cart') || 'fail';
         var mbId = localStorageService.get('user').fieldWorkerId || 'fail';
         if (order === 'fail' || mbId === 'fail') {
-            q.reject('Keine Items im Einkaufswagen');
+            q.reject('Fehler beim Absenden der Bestellung!');
             return q.promise;
         } else {
             
