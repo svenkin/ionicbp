@@ -11,8 +11,8 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
     })
     .controller('DashboardCtrl', function ($scope, $log, UserData, Orders, Customer, $filter, $ionicLoading, $timeout) {
         $scope.data = {};
-        $scope.test = function () {
-            $ionicLoading.show({
+        (function(){
+             $ionicLoading.show({
                 template: 'Loading...'
             });
             //            Customer.getCustomerById(20002);
@@ -28,7 +28,7 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
                 $log.log(err);
                 $ionicLoading.hide();
             })
-        }
+        })();
 
         $scope.refresh = function () {
             $scope.data.orders = [];
