@@ -4,7 +4,7 @@
         <button ng-click="test()">Test it</button>
         <ul class="list">
             <li class="item" ng-repeat="orders in data.orders">
-                {{orders.orderId}}
+                {{orders.customer.companyName}}
             </li>
         </ul>
     </ion-content>
