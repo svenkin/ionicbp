@@ -9740,3 +9740,10 @@ a.button {
 
 .sendOrder #mbId {
   float: right; }
+
+.sendOrder #kundenlabel {
+  margin-right: 75px; }
+
+.sendOrder #kundenId {
+  width: 100%;
+  text-align: right; }
