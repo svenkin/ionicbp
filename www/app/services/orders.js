@@ -38,6 +38,9 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl,RequestFacto
            var newOrder = order;
            angular.forEach(order.items,function(item){
                newOrder.items[item.itemId] = localStorageService.get('Items')[item.itemId];
+               newOrder.items[item.itemId].price = item.price;
+               newOrder.items[item.itemId].quantity = item.quantity;
+               newOrder.networth = item.price * item.quantity;
            })
            
            newOrders.push(newOrder)
@@ -50,6 +53,7 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl,RequestFacto
         RequestFactory.get(baseUrl + 'api/item',{reqParams : {params : {
             itemID : id
         }}}).then(function(suc){
+            $log.log(OrderMapping.mapItems(suc.data));
             q.resolve({data : OrderMapping.mapItems(suc.data)})
         },function(err){
             q.reject(err);
@@ -85,8 +89,6 @@ angular.module('app').factory('OrderMapping', function ($log, $q) {
         return mappedOrders;
     };
     
-    
-    
     service.mapItems = function(items){
         var mappedItems = {};
         angular.forEach(items,function(item){
@@ -97,7 +99,8 @@ angular.module('app').factory('OrderMapping', function ($log, $q) {
                 itemId : item.ItemID,
                 material : item.Material,
                 pictureId : item.PictureID,
-                productGroup : item.ProductGroup
+                productGroup : item.ProductGroup,
+                price : item.Price
             }
             mappedItems[mapItem.itemId] = mapItem;
         })
