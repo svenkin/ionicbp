@@ -11,7 +11,12 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
     })
     .controller('DashboardCtrl', function ($scope, $log, UserData,Orders) {
         $scope.test = function () {
-            Orders.getItemsById(30014).then(function (suc) {
+            UserData.getMbByLastName('').then(function (suc) {
+                $log.log('Success', suc);
+            }, function (err) {
+                $log.log(err);
+            })
+            Orders.getAllItems().then(function (suc) {
                 $log.log('Success', suc);
             }, function (err) {
                 $log.log(err);

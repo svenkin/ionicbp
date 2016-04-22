@@ -1,6 +1,7 @@
 angular.module('app').factory('Orders', function ($log, $q, BaseUrl,RequestFactory,OrderMapping,localStorageService) {
     var baseUrl = BaseUrl;
     var service = {};
+    var itemList = [];
     service.getOrdersByMbid = function (id) {
         var q = $q.defer();
         RequestFactory.get(baseUrl+'api/Order',{reqParams : {params : {fieldWorkerID : id}}}).then(function(suc){
@@ -17,10 +18,11 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl,RequestFacto
     
     service.getAllItems = function(){
           var q = $q.defer();
-        RequestFactory.get(baseUrl+'api/Order',{reqParams : {params : {fieldWorkerID : id}}}).then(function(suc){
-           
+        RequestFactory.get(baseUrl+'api/Item').then(function(suc){
+            $log.log(suc);
+            itemList = OrderMapping.mapItems(suc.data)
             q.resolve({
-                    data: OrderMapping.mapOrders(suc.data),
+                    data: itemList,
                     status: suc.response.status
                 });
         },function(err){
@@ -29,14 +31,14 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl,RequestFacto
         return q.promise;
     }
     
-    service.mergeOrderAndItems = function(id){
+    service.mergeOrderAndItems = function(orders){
         var q = $q.defer();
         
-        service.getOrdersByMbid(id).then(function(suc){
-            
-        },function(){
-            
-        })
+       angular.forEach(orders,function(order){
+           angular.forEach(order.items,function(item){
+               
+           })
+       })
         
         return q.promise;
     }
@@ -67,13 +69,13 @@ angular.module('app').factory('OrderMapping', function ($log, $q) {
                 orderDate : value.OrderDate,
                 orderId : value.OrderID
             };
-            var items = [];
+            var items = {};
             angular.forEach(value.OrderingData,function(item){
-                items.push({
+                items.push[item.ItemID] = {
                     itemId : item.ItemID,
                     price : item.Price_Euro,
                     quantity : item.Quantity
-                });
+                };
             });
             mappedOrder.items = items;
             mappedOrders.push(mappedOrder);
@@ -84,7 +86,7 @@ angular.module('app').factory('OrderMapping', function ($log, $q) {
     
     
     service.mapItems = function(items){
-        var mappedItems = [];
+        var mappedItems = {};
         angular.forEach(items,function(item){
             var mapItem = {
                 coating : item.Coating,
@@ -95,7 +97,7 @@ angular.module('app').factory('OrderMapping', function ($log, $q) {
                 pictureId : item.PictureID,
                 productGroup : item.ProductGroup
             }
-            mappedItems.push(mapItem);
+            mappedItems[mapItem.itemId] = mapItem;
         })
         return mappedItems;
     }
