@@ -10,70 +10,57 @@ angular.module('app.test', []).config(function ($stateProvider) {
   })
 })
   .controller('TestCtrl', function ($scope, $log, localStorageService) {
-      var data = localStorageService.get("Items");
+      var rawData = localStorageService.get("orders");
 
-    var blub = [];
-    for(var i = 0; i<data.length; i++){
-      blub.push(data[i].id);
+    var blub = {
+      id:"1",
+      data: []
     }
+    for(var i = 0; i<rawData.length; i++){
+      var date = rawData[i].orderDateRaw;
+      blub.data.push([date,rawData[i].networth]);
+    }
+    console.log(blub);
     //This is not a highcharts object. It just looks a little like one!
     $scope.chartConfig = {
       options: {
-        spacing: [0,0,0,0]
+        zoomType: "x"
       },
-
+      charts:
+      {
+        panning:true
+      },
+      xAxis:
+      {
+        type: 'datetime',
+        tickInterval: 20
+      },
       yAxis:
       {
         title:{
            text: null
         },
         labels: {
-          align: 'left',
-          x: 0,
-          y: -3
+          align: 'right',
+          x: -5,
+          y: -3,
+          padding: 0
         },
       },
-      series: [],
+      plotOptions: {
+        spline: {
+          marker: {
+            enabled: true
+          }
+        }
+      },
+      series: [blub],
       title: {
         text: null
-      },
-     // useHighStocks: true
-    }
-
-    $scope.chartConfig.series.push({
-        id: 1,
-        data: [
-          [1147651200000, 23.15],
-          [1147737600000, 23.01],
-          [1147824000000, 22.73],
-          [1147910400000, 22.83],
-          [1147996800000, 22.56],
-          [1148256000000, 22.88],
-          [1148342400000, 22.79],
-          [1148428800000, 23.50],
-          [1148515200000, 23.74],
-          [1148601600000, 23.72],
-          [1148947200000, 23.15],
-          [1149033600000, 22.65]
-        ]
-      },   {
-        id: 2,
-        data: [
-          [1147651200000, 25.15],
-          [1147737600000, 25.01],
-          [1147824000000, 25.73],
-          [1147910400000, 25.83],
-          [1147996800000, 25.56],
-          [1148256000000, 25.88],
-          [1148342400000, 25.79],
-          [1148428800000, 25.50],
-          [1148515200000, 26.74],
-          [1148601600000, 26.72],
-          [1148947200000, 26.15],
-          [1149033600000, 26.65]
-        ]
-
       }
-
-    );
+    }
+    var first = rawData[0].orderDateRaw;
+    var last = rawData[rawData.length-1].orderDateRaw;
+    console.log(first);
+    console.log(last);
   });
