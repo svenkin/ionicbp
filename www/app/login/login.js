@@ -1,5 +1,5 @@
-angular.module('app.login', []).config(function ($stateProvider) {
-    $stateProvider.state('app.login', {
+angular.module('login', []).config(function ($stateProvider) {
+    $stateProvider.state('login', {
       url: '/login',
       views: {
         'menuContent': {
