@@ -11,8 +11,11 @@ angular.module('app').factory('Customer', function ($log, $q, RequestFactory, Ba
                 }
             }
         }).then(function (customer) {
-          console.log(customer);
-            q.resolve(CustomerMapping.mapCustomer(customer.data[0]));
+            if(customer.data.length > 0){
+                q.resolve(CustomerMapping.mapCustomer(customer.data[0]));
+            }else{
+                q.reject('empty array')
+            }
         }, function (err) {
             q.reject(err);
         })

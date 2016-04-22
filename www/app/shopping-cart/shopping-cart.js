@@ -9,11 +9,12 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
             }
         })
     })
-    .controller('ShoppingCartCtrl', function ($scope, $log, localStorageService, shoppingCart, $ionicModal) {
+    .controller('ShoppingCartCtrl', function ($scope, $log, $timeout, localStorageService, shoppingCart, $ionicModal, Customer, newOrder, $ionicLoading, $ionicContentBanner, $state) {
         $scope.data = {};
         $scope.data.price = shoppingCart.getFullPrice();
         $scope.data.cart = localStorageService.get('shopping-cart');
-    
+        var customerId = 0;
+
         $scope.changeQuantity = function () {
             localStorageService.set('shopping-cart', $scope.cart);
             $scope.data.price = shoppingCart.getFullPrice();
@@ -51,6 +52,77 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
         $scope.$on('modal.removed', function () {
             // Execute action
         });
+        $scope.data.style = {};
+        $scope.data.loaded = false;
+        $scope.data.compName = "Kunden-Id";
+        $scope.send = function () {
+            if ($scope.data.custfound) {
+                newOrder.send(customerId).then(function (suc) {
+                    $log.log(suc);
+                    localStorageService.remove('shopping-cart');
+                    $ionicContentBanner.show({
+                        autoClose: 3000,
+                        text: ['Erfolgreich Bestellung versendet'],
+                        type: 'succes',
+                        cancelOnStateChange : false
+                    });
+                    $scope.modal.hide();
+                    $state.go('app.dashboard');
+                    
+                }, function (err) {
+                    $ionicContentBanner.show({
+                        autoClose: 3000,
+                        text: [err],
+                        type: 'error'
+                    })
+                });
+            } else {
+                $log.warn('Bestellung wurde nicht versendet!');
+                $scope.data.style = {
+                    border: "1px solid red"
+                }
+                $scope.data.loaded = true;
+                $scope.data.custfound = false;
+                $scope.data.compName = "Kunden-Id";
+            }
+        }
+        $scope.$watch('data.custId', function (val) {
+            if (val !== null && val !== undefined && val !== 0) {
+                $ionicLoading.show({
+                    template: '<div style="text-align:center">Überprüfe Kunden-Id...<br/><ion-spinner icon="spiral"></ion-spinner></div>'
+                });
+                Customer.getCustomerById(val).then(function (suc) {
+                    console.log(suc);
+                    customerId = suc.customerId;
+                    $timeout(function () {
+                        $scope.data.style = {
+                            border: "1px solid green"
+                        };
+                        $ionicLoading.hide();
+                        $scope.data.loaded = true;
+                        $scope.data.custfound = true;
+                        $scope.data.compName = suc.companyName;
+                    }, 500)
 
+                }, function (err) {
+                    console.log(err);
+                    $timeout(function () {
+                        $scope.data.style = {
+                            border: "1px solid red"
+                        }
+                        $ionicLoading.hide();
+                        $scope.data.loaded = true;
+                        $scope.data.custfound = false;
+                        $scope.data.compName = "Kunden-Id";
+                    }, 500)
+                })
+            } else {
+                $scope.data.loaded = false;
+                $scope.data.style = {
+                    border: "none"
+                };
+                $scope.data.compName = "Kunden-Id";
+            }
+        });
 
     });

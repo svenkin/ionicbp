@@ -23,6 +23,20 @@
                     Mitarbeiter : <span>{{data.user.firstName}} {{data.user.lastName}}</span> <span id="mbId">ID : {{data.user.fieldWorkerId}}</span>
                 </div>
             </div>
-            <button class="button" ng-click="closeModal()">Close</button>
+            <div class="item item-text-wrap item-input-inset">
+
+                <span id="kundenlabel">{{data.compName}}: </span>
+                <label class="item-input-wrapper" ng-style="data.style">
+                    <i style="color:green;" class="ion-checkmark-round" ng-show="data.custfound && data.loaded"></i>
+                    <i style="color:red;" class="ion-close-round" ng-show="!data.custfound && data.loaded"></i>
+                    <input type="number" id="kundenId" placeholder="Kunden-Id" ng-model="data.custId" ng-model-options="{debounce : 1500}">
+                </label>
+
+            </div>
+            <div class="item">
+                <button class="button button-assertive" ng-click="closeModal()">Stornieren</button>
+                <button style="float:right;" class="button button-balanced" ng-click="send()">Absenden</button>
+            </div>
+
     </ion-content>
 </ion-modal-view>
