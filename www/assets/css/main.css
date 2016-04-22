@@ -9737,3 +9737,6 @@ a.button {
 
 #dashlist li {
   padding: 10px; }
+
+.sendOrder #mbId {
+  float: right; }

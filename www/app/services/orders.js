@@ -79,7 +79,7 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
             newOrder.networth = ges;
             newOrders.push(newOrder);
         })
-        return $filter('orderBy')(newOrders, 'orderDateRaw', true);
+        return $filter('orderBy')(newOrders, 'orderDateRaw', false);
     }
 
     service.getItemsById = function (id) {
