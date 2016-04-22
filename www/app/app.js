@@ -9,6 +9,7 @@ angular.module('app', [
     'Requestfactory',
     'app.menu',
     'app.login',
+    'app.catalog',
     'app.dashboard',
     'jett.ionic.content.banner',
     'LocalStorageModule'
