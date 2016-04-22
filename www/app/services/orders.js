@@ -105,7 +105,6 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
     return service;
 });
 angular.module('app').factory('OrderMapping', function ($log, $q, Customer, $moment) {
-
     var service = {}
     service.mapOrders = function (orders) {
         var q = $q.defer();
