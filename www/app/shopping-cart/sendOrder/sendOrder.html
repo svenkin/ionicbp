@@ -13,7 +13,7 @@
                     <li class="item" ng-repeat="data in data.cart">
                         <img ng-src="../assets/img/{{ data.pictureId }}.png" />
                         <span> ID: {{ data.itemId }}</span>
-                        <br> Kategorie: {{ data.productGroup }} <span>Kosten: {{data.price * data.quantity}}€</span>
+                        <br> Kategorie: {{ data.productGroup }} <span>{{data.price}} X {{data.quantity}} = {{data.price * data.quantity}}€</span>
                     </li>
                     <li><span style="float:right;text-decoration: underline">Gesamtkosten: {{data.price}}€</span></li>
                 </ul>
