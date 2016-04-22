@@ -10,16 +10,18 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
         })
     })
     .controller('ShoppingCartCtrl', function ($scope, $log, localStorageService, shoppingCart, $ionicModal) {
-        $scope.price = shoppingCart.getFullPrice();
-        $scope.cart = localStorageService.get('shopping-cart');
+        $scope.data = {};
+        $scope.data.price = shoppingCart.getFullPrice();
+        $scope.data.cart = localStorageService.get('shopping-cart');
+    
         $scope.changeQuantity = function () {
             localStorageService.set('shopping-cart', $scope.cart);
-            $scope.price = shoppingCart.getFullPrice();
+            $scope.data.price = shoppingCart.getFullPrice();
         };
         $scope.remove = function (id) {
             delete $scope.cart[id];
             localStorageService.set('shopping-cart', $scope.cart);
-            $scope.price = shoppingCart.getFullPrice();
+            $scope.data.price = shoppingCart.getFullPrice();
         };
 
         $ionicModal.fromTemplateUrl('app/shopping-cart/sendOrder/sendOrder.html', {
@@ -30,12 +32,10 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
         });
 
         $scope.sendOrder = function () {
+            $scope.data.user = localStorageService.get('user');
             $scope.modal.show();
         }
 
-        $scope.openModal = function () {
-            $scope.modal.show();
-        };
         $scope.closeModal = function () {
             $scope.modal.hide();
         };

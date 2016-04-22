@@ -1,12 +1,28 @@
-
 <ion-modal-view>
     <ion-header-bar class="bar-energized">
-    <div class="buttons">
-    <button class="button" ng-click="closeModal()"><i class="ion-arrow-left-c"></i>Zum Einkaufswagen</button>
-  </div>
-    <h1 class="title">Ihre Bestellung</h1>
+        <div class="buttons">
+            <button class="button" ng-click="closeModal()"><i class="ion-arrow-left-c"></i>Zum Einkaufswagen</button>
+        </div>
+        <h1 class="title">Ihre Bestellung</h1>
     </ion-header-bar>
     <ion-content>
-        <button class="button" ng-click="closeModal()">Close</button>
+        <div class="card sendOrder">
+            <div class="item item-text-wrap">
+                <h2>Ihre Items</h2>
+                <ul class="list" id="dashlist">
+                    <li class="item" ng-repeat="data in data.cart">
+                        <img ng-src="../assets/img/{{ data.pictureId }}.png" />
+                        <span> ID: {{ data.itemId }}</span>
+                        <br> Kategorie: {{ data.productGroup }} <span>Kosten: {{data.price * data.quantity}}€</span>
+                    </li>
+                    <li><span style="float:right;text-decoration: underline">Gesamtkosten: {{data.price}}€</span></li>
+                </ul>
+            </div>
+            <div class="item item-text-wrap">
+                <div>
+                    Mitarbeiter : <span>{{data.user.firstName}} {{data.user.lastName}}</span> <span id="mbId">ID : {{data.user.fieldWorkerId}}</span>
+                </div>
+            </div>
+            <button class="button" ng-click="closeModal()">Close</button>
     </ion-content>
 </ion-modal-view>
