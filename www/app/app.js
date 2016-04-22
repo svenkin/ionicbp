@@ -5,35 +5,35 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.controllers' is found in controllers.js
 angular.module('app', [
-  'ionic',
-  'Requestfactory',
-  'app.menu',
+    'ionic',
+    'Requestfactory',
+    'app.menu',
     'app.login',
-  'app.dashboard',
-  'jett.ionic.content.banner',
+    'app.dashboard',
+    'jett.ionic.content.banner',
     'LocalStorageModule'
   ])
 
-.run(function ($ionicPlatform) {
+  .run(function ($ionicPlatform) {
     $ionicPlatform.ready(function () {
-        // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
-        // for form inputs)
-        if (window.cordova && window.cordova.plugins.Keyboard) {
-            cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
-            cordova.plugins.Keyboard.disableScroll(true);
+      // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
+      // for form inputs)
+      if (window.cordova && window.cordova.plugins.Keyboard) {
+        cordova.plugins.Keyboard.hideKeyboardAccessoryBar(true);
+        cordova.plugins.Keyboard.disableScroll(true);
 
-        }
-        if (window.StatusBar) {
-            // org.apache.cordova.statusbar required
-            StatusBar.styleDefault();
-        }
+      }
+      if (window.StatusBar) {
+        // org.apache.cordova.statusbar required
+        StatusBar.styleDefault();
+      }
     });
-})
+  })
 
-.config(function ($stateProvider, $urlRouterProvider,localStorageServiceProvider) {
+  .config(function ($stateProvider, $urlRouterProvider, localStorageServiceProvider) {
 
     localStorageServiceProvider.setPrefix('ZAK');
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/dashboard');
-})
-.constant('BaseUrl','http://zakitchallenge.azurewebsites.net/');
+  })
+  .constant('BaseUrl', 'http://zakitchallenge.azurewebsites.net/');
