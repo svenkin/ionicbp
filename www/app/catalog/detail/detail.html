@@ -1,4 +1,8 @@
 <ion-view title="Detail {{ items.itemId }}">
+  <ion-nav-buttons side="right">
+    <button class="button icon ion-android-cart" ui-sref="app.shoppingCart">
+    </button>
+  </ion-nav-buttons>
   <ion-content>
     <img ng-src="../../assets/img/{{ items.pictureId }}.png" class="detail-image"/><br>
     <div class="card">

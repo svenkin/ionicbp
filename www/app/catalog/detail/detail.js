@@ -22,7 +22,7 @@ angular.module('app.catalog.detail', []).config(function ($stateProvider) {
       $ionicContentBanner.show({
         autoClose: 3000,
         text: ['Element zum Warenkorb hinzugefügt'],
-        type: 'info'
+        type: 'success'
       });
     };
   });

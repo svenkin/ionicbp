@@ -66,7 +66,7 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
                     $ionicContentBanner.show({
                         autoClose: 3000,
                         text: ['Erfolgreich Bestellung versendet'],
-                        type: 'succes',
+                        type: 'success',
                         cancelOnStateChange : false
                     });
                     $scope.modal.hide();
