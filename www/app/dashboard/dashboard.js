@@ -11,15 +11,16 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
     })
     .controller('DashboardCtrl', function ($scope, $log, UserData,Orders) {
         $scope.test = function () {
-            UserData.getMbByLastName('').then(function (suc) {
-                $log.log('Success', suc);
-            }, function (err) {
-                $log.log(err);
-            })
-            Orders.getAllItems().then(function (suc) {
-                $log.log('Success', suc);
+            Orders.getOrdersByMbid(10002).then(function (ord) {
+                $log.log('merge',ord);
+                Orders.getAllItems().then(function (suc) {
+               Orders.mergeOrderAndItems(ord.data);
             }, function (err) {
                 $log.log(err);
             });
+                
+            }, function (err) {
+                $log.log(err);
+            })
         }
     });

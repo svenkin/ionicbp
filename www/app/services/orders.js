@@ -19,8 +19,9 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl,RequestFacto
     service.getAllItems = function(){
           var q = $q.defer();
         RequestFactory.get(baseUrl+'api/Item').then(function(suc){
-            $log.log(suc);
-            itemList = OrderMapping.mapItems(suc.data)
+            itemList = OrderMapping.mapItems(suc.data);
+            $log.log('list',itemList);
+            localStorageService.add('Items',itemList);
             q.resolve({
                     data: itemList,
                     status: suc.response.status
@@ -32,15 +33,16 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl,RequestFacto
     }
     
     service.mergeOrderAndItems = function(orders){
-        var q = $q.defer();
-        
+        var newOrders = [];
        angular.forEach(orders,function(order){
+           var newOrder = order;
            angular.forEach(order.items,function(item){
-               
+               newOrder.items[item.itemId] = localStorageService.get('Items')[item.itemId];
            })
+           
+           newOrders.push(newOrder)
        })
-        
-        return q.promise;
+        return newOrders;
     }
     
     service.getItemsById = function(id){
@@ -71,7 +73,7 @@ angular.module('app').factory('OrderMapping', function ($log, $q) {
             };
             var items = {};
             angular.forEach(value.OrderingData,function(item){
-                items.push[item.ItemID] = {
+                items[item.ItemID] = {
                     itemId : item.ItemID,
                     price : item.Price_Euro,
                     quantity : item.Quantity
