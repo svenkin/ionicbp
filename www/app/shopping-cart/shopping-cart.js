@@ -16,7 +16,7 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
         var customerId = 0;
 
         $scope.changeQuantity = function () {
-            localStorageService.set('shopping-cart', $scope.cart);
+            localStorageService.set('shopping-cart', $scope.data.cart);
             $scope.data.price = shoppingCart.getFullPrice();
         };
         $scope.remove = function (id) {
@@ -68,7 +68,7 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
                     });
                     $scope.modal.hide();
                     $state.go('app.dashboard');
-                    
+
                 }, function (err) {
                     $ionicContentBanner.show({
                         autoClose: 3000,
