@@ -9,8 +9,16 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             }
         })
     })
-    .controller('DashboardCtrl', function ($scope, $log, UserData, Orders, Customer, $filter, $ionicLoading, $timeout) {
+    .controller('DashboardCtrl', function ($scope, $log, UserData, Orders, Customer, $filter, $ionicLoading, $timeout,newOrder) {
         $scope.data = {};
+//        (function(){
+//            newOrder.send(20010).then(function(){
+//                
+//            },function(){
+//                
+//            })
+//        })();
+    
         (function(){
              $ionicLoading.show({
                 template: 'Loading...'
@@ -18,7 +26,7 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             //            Customer.getCustomerById(20002);
             Orders.getAllOrders(10002).then(function (ord) {
                 var ordered = $filter('orderBy')(ord, 'orderDate', true);
-                $scope.data.orders = ordered.splice(0, 5);
+                $scope.data.orders = ordered.splice(ordered.length-5, 5);
                 $log.log($scope.data.orders);
                 $timeout(function () {
                     $ionicLoading.hide();
@@ -29,12 +37,11 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
                 $ionicLoading.hide();
             })
         })();
-
         $scope.refresh = function () {
             $scope.data.orders = [];
             Orders.getAllOrders(10002).then(function (ord) {
                 var ordered = $filter('orderBy')(ord, 'orderDate', true);
-                $scope.data.orders = ordered.splice(0, 5);
+                $scope.data.orders = ordered.splice(ordered.length-5, 5);
                 $timeout(function () {
                     $scope.$broadcast('scroll.refreshComplete');
                 }, 500)
