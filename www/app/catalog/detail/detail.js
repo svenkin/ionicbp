@@ -1,28 +1,30 @@
 angular.module('app.catalog.detail', []).config(function ($stateProvider) {
     $stateProvider.state('app.catalog-detail', {
-      url: '/catalog/detail/:id',
+      url: '/catalog/detail/:id?isFromDashboard',
       views: {
         'menuContent': {
           templateUrl: 'app/catalog/detail/detail.html',
           controller: 'DetailCtrl',
           params: {
-            id: 0
+            id: 0,
+            isFromDashboard: true
           }
         }
-      },
-         params: {
-            id: 0
-          }
-
+      }
     })
   })
   .controller('DetailCtrl', function ($scope, $log, $stateParams, localStorageService, shoppingCart, $rootScope, $ionicContentBanner) {
-    console.log($stateParams);
+    $scope.data = {};
     var id = $stateParams.id;
-    $scope.data = localStorageService.get('Items')[id];
-    console.log($scope.data);
+    $scope.$watchCollection(function(){
+      return $stateParams;
+    }, function(){
+      $log.info("State params have been updated", $stateParams.isFromDashboard);
+      $scope.data.isFromDashboard = $stateParams.isFromDashboard;
+    });
+    $scope.items = localStorageService.get('Items')[id];
     $scope.toShoppingCart = function () {
-      shoppingCart.addItem($scope.data, 1);
+      shoppingCart.addItem($scope.items, 1);
       $rootScope.$broadcast('item-added-cart');
       $ionicContentBanner.show({
         autoClose: 3000,

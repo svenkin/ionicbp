@@ -9,7 +9,11 @@
         <span class="input-label">Nachname</span>
         <input type="text" ng-model="userData.name">
       </label>
-      <button class="button button-full button-positive" ng-click="login()">
+    <ion-list>
+      <ion-radio ng-model="data.choice" ng-value="'fieldWorker'">Außendienst-Mitarbeiter</ion-radio>
+      <ion-radio ng-model="data.choice" ng-value="'customer'">Kunde</ion-radio>
+    </ion-list>
+      <button class="button button-full button-energized" ng-click="login()">
         Login
       </button>
   </ion-content>
