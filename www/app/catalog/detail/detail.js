@@ -1,15 +1,18 @@
 angular.module('app.catalog.detail', []).config(function ($stateProvider) {
-    $stateProvider.state('app.catalog.detail', {
-      url: '/detail/:id',
+    $stateProvider.state('app.detail', {
+      url: '/catalog/detail/:id',
       views: {
         'menuContent': {
           templateUrl: 'app/catalog/detail/detail.html',
           controller: 'DetailCtrl',
           params: {
-            id: null
+            id: 0
           }
         }
-      }
+      },
+         params: {
+            id: 0
+          }
 
     })
   })
