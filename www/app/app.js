@@ -12,8 +12,10 @@ angular.module('app', [
     'app.catalog',
     'app.catalog.detail',
     'app.dashboard',
+    'app.test',
     'jett.ionic.content.banner',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'highcharts-ng'
   ])
 
   .run(function ($ionicPlatform) {
