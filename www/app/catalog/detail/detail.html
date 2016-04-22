@@ -1,5 +1,25 @@
 <ion-view>
   <ion-content>
-    Detail
+    <img ng-src="../../assets/img/{{ data.pictureId }}.png" class="detail-image"/><br>
+    <div class="card">
+      <div class="item item-text-wrap">
+        ID: {{ data.itemId }}
+      </div>
+      <div class="item item-text-wrap">
+        Material: {{ data.material }}
+      </div>
+      <div class="item item-text-wrap">
+        Mantel: {{ data.coating }}
+      </div>
+      <div class="item item-text-wrap">
+        Durchmesser: {{ data.diameter }}
+      </div>
+      <div class="item item-text-wrap">
+        Internal Cooling: {{ data.internalCooling ? 'Unterstützt' : 'Nicht unterstützt' }}
+      </div>
+      <div class="item item-text-wrap">
+        Kategorie: {{ data.productGroup }}
+      </div>
+    </div>
   </ion-content>
 </ion-view>
