@@ -10,7 +10,8 @@ angular.module('app', [
   'app.menu',
     'app.login',
   'app.dashboard',
-  'jett.ionic.content.banner'
+  'jett.ionic.content.banner',
+    'LocalStorageModule'
   ])
 
 .run(function ($ionicPlatform) {
@@ -29,9 +30,9 @@ angular.module('app', [
     });
 })
 
-.config(function ($stateProvider, $urlRouterProvider) {
+.config(function ($stateProvider, $urlRouterProvider,localStorageServiceProvider) {
 
-
+    localStorageServiceProvider.setPrefix('ZAK');
     // if none of the above states are matched, use this as the fallback
     $urlRouterProvider.otherwise('/app/dashboard');
 })

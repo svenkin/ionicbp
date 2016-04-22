@@ -1,8 +1,22 @@
-angular.module('app').factory('Orders', function ($log, $q, BaseUrl,RequestFactory,OrderMapping) {
+angular.module('app').factory('Orders', function ($log, $q, BaseUrl,RequestFactory,OrderMapping,localStorageService) {
     var baseUrl = BaseUrl;
     var service = {};
     service.getOrdersByMbid = function (id) {
         var q = $q.defer();
+        RequestFactory.get(baseUrl+'api/Order',{reqParams : {params : {fieldWorkerID : id}}}).then(function(suc){
+           
+            q.resolve({
+                    data: OrderMapping.mapOrders(suc.data),
+                    status: suc.response.status
+                });
+        },function(err){
+            q.reject(err);
+        });
+        return q.promise;
+    }
+    
+    service.getAllItems = function(){
+          var q = $q.defer();
         RequestFactory.get(baseUrl+'api/Order',{reqParams : {params : {fieldWorkerID : id}}}).then(function(suc){
            
             q.resolve({
