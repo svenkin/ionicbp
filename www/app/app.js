@@ -9,7 +9,8 @@ angular.module('app', [
   'Requestfactory',
   'app.menu',
     'app.login',
-  'app.dashboard'
+  'app.dashboard',
+  'jett.ionic.content.banner'
   ])
 
 .run(function ($ionicPlatform) {

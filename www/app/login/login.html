@@ -1,5 +1,16 @@
 <ion-view>
     <ion-content>
         <h1>Login</h1>
+        <label class="item item-input">
+          <span class="input-label">Benutzer-ID</span>
+          <input type="number" ng-model="userData.id">
+        </label>
+        <label class="item item-input">
+          <span class="input-label">Nachname</span>
+          <input type="text" ng-model="userData.name">
+        </label>
+        <button class="button button-full button-positive" ng-click="login()">
+          Login
+        </button>
     </ion-content>
 </ion-view>
