@@ -115,6 +115,7 @@ angular.module('app').factory('OrderMapping', function ($log, $q, Customer, $mom
                 customerId: value.CustomerID,
                 fieldWorkerId: value.FieldWorkerID,
                 orderDate: $moment(value.OrderDate, 'YYYYMMDD').fromNow(),
+                orderDateRaw : new Date(value.OrderDate),
                 orderId: value.OrderID
             };
             Customer.getCustomerById(mappedOrder.customerId).then(function (suc) {
