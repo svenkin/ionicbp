@@ -16,7 +16,7 @@ angular.module('app.menu', []).config(function ($stateProvider) {
             $ionicContentBanner.show({
                 autoClose: 3000,
                 text: ['Erfolgreich ausgeloggt!'],
-                type: 'info'
+                type: 'success'
             });
             $state.go('login');
             localStorageService.clearAll();
