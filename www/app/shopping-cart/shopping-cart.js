@@ -15,13 +15,16 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
         $scope.data.cart = localStorageService.get('shopping-cart');
         var customerId = 0;
 
-        $scope.changeQuantity = function () {
+        $scope.changeQuantity = function (id, quantity) {
+            if (quantity < 0 || typeof quantity != 'number') {
+              $scope.data.cart[id].quantity = 0;
+            }
             localStorageService.set('shopping-cart', $scope.data.cart);
             $scope.data.price = shoppingCart.getFullPrice();
         };
         $scope.remove = function (id) {
-            delete $scope.cart[id];
-            localStorageService.set('shopping-cart', $scope.cart);
+            delete $scope.data.cart[id];
+            localStorageService.set('shopping-cart', $scope.data.cart);
             $scope.data.price = shoppingCart.getFullPrice();
         };
 
