@@ -9,10 +9,10 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             }
         })
     })
-    .controller('DashboardCtrl', function ($scope, $log, UserData,Orders) {
+    .controller('DashboardCtrl', function ($scope, $log, UserData,Orders,Customer) {
     $scope.data = {};
         $scope.test = function () {
-            Orders.getItemsById(30001);
+            Customer.getCustomerById(20002);
             Orders.getOrdersByMbid(10002).then(function (ord) {
                 $log.log('merge',ord);
                 Orders.getAllItems().then(function (suc) {
