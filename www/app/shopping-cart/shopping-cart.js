@@ -9,7 +9,7 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
             }
         })
     })
-    .controller('ShoppingCartCtrl', function ($scope, $log, $timeout, localStorageService, shoppingCart, $ionicModal, Customer, newOrder, $ionicLoading, $ionicContentBanner, $state) {
+    .controller('ShoppingCartCtrl', function ($scope, $log, $ionicHistory, $timeout, localStorageService, shoppingCart, $ionicModal, Customer, newOrder, $ionicLoading, $ionicContentBanner, $state) {
         $scope.data = {};
         $scope.data.price = shoppingCart.getFullPrice();
         $scope.data.cart = localStorageService.get('shopping-cart');
@@ -73,6 +73,9 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
                         cancelOnStateChange: false
                     });
                     $scope.modal.hide();
+                    $ionicHistory.nextViewOptions({
+                      historyRoot: true
+                    });
                     $state.go('app.dashboard');
 
                 }, function (err) {
