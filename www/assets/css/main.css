@@ -9809,15 +9809,24 @@ a.button {
   width: 100%;
   text-align: right; }
 
-.sendOrder #gesKosten {
+.sendOrder .gesKosten {
   float: right;
   margin-right: -10px; }
-  .sendOrder #gesKosten #ges {
-    text-decoration: underline; }
 
-.sendOrder #itemId {
+.sendOrder .ges {
+  text-decoration: underline; }
+
+.sendOrder .itemId {
   float: right;
   margin-right: 5px; }
+
+.inputK {
+  font-size: 16pt;
+  width: 50px;
+  margin-top: -7px;
+  text-align: right;
+  display: inline;
+  margin-bottom: 0 !important; }
 
 .float-right {
   float: right; }
