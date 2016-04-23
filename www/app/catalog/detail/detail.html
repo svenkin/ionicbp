@@ -1,6 +1,6 @@
 <ion-view title="Detail {{ items.itemId }}">
   <ion-nav-buttons side="right">
-    <button class="button icon ion-android-cart" ng-click="gotoCart()">
+    <button class="button icon ion-android-cart" ng-class="{'disabled': !price}" ng-click="gotoCart()">
     </button>
   </ion-nav-buttons>
   <ion-content>
