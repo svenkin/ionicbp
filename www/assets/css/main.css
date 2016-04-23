@@ -9731,6 +9731,11 @@ a.button {
   -webkit-transition-duration: 0s;
   transition-duration: 0s; }
 
+.loginbg {
+  background: url("../img/login.png") !important;
+  background-size: cover !important;
+  background-repeat: no-repeat !important; }
+
 .categories {
   position: absolute;
   height: 10px;
@@ -9802,6 +9807,15 @@ a.button {
 
 #dashlist li {
   padding: 10px; }
+
+.bestellInput {
+  display: inline !important;
+  width: 50px !important;
+  border: 1px solid !important;
+  text-align: right !important;
+  height: 25px !important;
+  border-radius: 4px !important;
+  margin-right: 5px !important; }
 
 .sendOrder #mbId {
   float: right; }

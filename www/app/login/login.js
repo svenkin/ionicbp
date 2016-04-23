@@ -5,7 +5,7 @@ angular.module('app.login', []).config(function ($stateProvider) {
             controller: 'LoginCtrl'
         })
     })
-    .controller('LoginCtrl', function ($scope, $log, UserData, $ionicLoading, $ionicContentBanner, $state, localStorageService, $ionicSideMenuDelegate, Customer) {
+    .controller('LoginCtrl', function ($scope, $log, UserData, $ionicLoading, $ionicContentBanner, $state, localStorageService, $ionicSideMenuDelegate, Customer,$ionicHistory) {
         $scope.data = {};
         $scope.data.choice = 'fieldWorker';
         $scope.userData = {};
@@ -25,6 +25,9 @@ angular.module('app.login', []).config(function ($stateProvider) {
                     localStorageService.set('role', 'fieldWorker');
                     $ionicLoading.hide();
                     $scope.userData = {};
+                    $ionicHistory.nextViewOptions({
+                        historyRoot: true
+                    });
                     $state.go('app.dashboard');
                     $ionicSideMenuDelegate.canDragContent(true);
                 }, function (error) {
@@ -42,6 +45,9 @@ angular.module('app.login', []).config(function ($stateProvider) {
                     localStorageService.set('role', 'customer');
                     localStorageService.set('customer', suc);
                     $ionicSideMenuDelegate.canDragContent(true);
+                    $ionicHistory.nextViewOptions({
+                        historyRoot: true
+                    });
                     $state.go('app.customerDashboard');
                     $scope.userData = {};
                     $ionicLoading.hide();

@@ -30,7 +30,9 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
             }
         };
         $scope.remove = function (id) {
+            $log.log(id);
             delete $scope.data.cart[id];
+            localStorageService.set('shopping-cart', $scope.data.cart);
             $rootScope.$broadcast('item-added-cart');
         };
 

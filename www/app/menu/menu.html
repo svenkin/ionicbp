@@ -20,8 +20,8 @@
     </ion-header-bar>
     <ion-content>
       <ion-list>
-        <ion-item menu-close ui-sref="app.shoppingCart" ng-class="{'disabled':!price}">
-          <i class="ion-android-cart"></i><span class="badge badge-assertive">{{ !price ? '0' : price }}€</span>
+        <ion-item class="item-icon-left" menu-close ui-sref="app.shoppingCart" ng-class="{'disabled':!price}">
+          <i class="icon ion-android-cart"></i>Einkaufswagen<span class="badge badge-assertive">{{ !price ? '0' : price }}€</span>
         </ion-item>
         <ion-item menu-close ng-click="goDashboard()">
           Dashboard

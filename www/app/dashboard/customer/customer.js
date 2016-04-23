@@ -98,8 +98,8 @@ angular.module('app.dashboard.customer', []).config(function ($stateProvider) {
                     lastDate = date;
                 }
             }
-            $scope.data.maxValue = chartDataArray.data.length -1;
-             $scope.data.sliderVal = chartDataArray.data.length -10;
+            $scope.data.maxValue = chartDataArray.data.length - 1;
+            $scope.data.sliderVal = chartDataArray.data.length - 10;
             $scope.chartConfig = {
                 chart: {
                     type: 'areaspline'
@@ -170,10 +170,11 @@ angular.module('app.dashboard.customer', []).config(function ($stateProvider) {
         }
         $log.log('dates', chartDataArray.data)
             //set slider values
-        $scope.dataLength = chartDataArray.data.length;
+
         $scope.data = {};
         //        $scope.data.sliderVal = $scope.dataLength;
         //Set initial slider value
+        $scope.dataLength = chartDataArray.data.length;
         $scope.data.sliderVal = chartDataArray.data.length;
 
         //Set max slider value

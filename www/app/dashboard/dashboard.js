@@ -9,9 +9,10 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             }
         })
     })
-    .controller('DashboardCtrl', function ($scope, $log, UserData, Orders, Customer, $filter, $ionicLoading, $timeout, newOrder, localStorageService, $state, $rootScope) {
+    .controller('DashboardCtrl', function ($scope, $log, UserData, Orders, Customer, $filter, $ionicLoading, $timeout, newOrder, localStorageService, $state, $rootScope,$ionicScrollDelegate) {
         var stateBefore = '';
         var rawData = localStorageService.get("orders") || [];
+        $scope.data = {};
        
         $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
              var userRole = localStorageService.get('role');
@@ -40,8 +41,10 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             })
             var id = localStorageService.get('user').fieldWorkerId || 'fail';
             Orders.getAllOrders(id).then(function (ord) {
-                var ordered = $filter('orderBy')(ord, 'orderId', true);
-                $scope.data.orders = ordered.splice(0, 5);
+                ordered = $filter('orderBy')(ord, 'orderId', true);
+                daten = ordered;
+                var tmp = ordered;
+                $scope.data.orders = tmp.splice(0, 5);
                 $scope.data.user = localStorageService.get('user');
                 rawData = localStorageService.get("orders");
                 chart(rawData);
@@ -56,16 +59,19 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             })
         };
         loadData();
-
+        var ordered = [];
+        
         $scope.refresh = function () {
             var id = localStorageService.get('user') || 'fail';
             id = id.fieldWorkerId;
             $scope.data.orders = [];
             Orders.getAllOrders(id).then(function (ord) {
-                var ordered = $filter('orderBy')(ord, 'orderId', true);
+                ordered = $filter('orderBy')(ord, 'orderId', true);
+                daten = ordered;
                 rawData = localStorageService.get("orders");
                 $scope.data.user = localStorageService.get('user');
-                $scope.data.orders = ordered.splice(0, 5);
+                var tmp = ordered;
+                $scope.data.orders = tmp.splice(0, 5);
                 chart(rawData);
                 $timeout(function () {
                     $scope.$broadcast('scroll.refreshComplete');
@@ -143,6 +149,7 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
                     text: null
                 }
             }
+            $scope.sliderChanged();
         }
 
 
