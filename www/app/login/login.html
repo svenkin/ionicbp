@@ -16,17 +16,19 @@
                 </li>
                 <li>
                     <label class="item item-input">
-                        <input type="number" placeholder="Meine Id">
+                        <span class="input-label">Meine Id</span>
+                        <input type="number" style="text-align : right" ng-model="userData.id">
                     </label>
                 </li>
                 <li ng-show="data.login === 'mitarbeiter'">
                     <label class="item item-input">
-                        <input type="text" placeholder="Mein Name">
+                       <span class="input-label">Mein Name</span>
+                        <input type="text" style="text-align : right" ng-model="userData.name">
                     </label>
                 </li>
             </ul>
             <div class="item">
-                <button class="button button-full button-energized">
+                <button class="button button-full button-energized" ng-click="login()">
                     Login
                 </button>
             </div>

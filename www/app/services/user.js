@@ -3,9 +3,8 @@ angular.module('app').factory('UserData', function ($log, $q, UserMapping, Reque
     var baseUrl = BaseUrl;
 
     //Try to get mitarbeiterlist by last name, if succesfull get mitarbeiter by id, if succesfull compare if object by id is in list by         last name -> if true successfully logged in
-    service.login = function (id, name, role) {
+    service.login = function (id, name) {
         var q = $q.defer();
-        if (role == 'fieldWorker') {
           service.getMbByLastName(name).then(function (mbsByName) {
             service.getMbById(id).then(function (mbById) {
               var successLogin = false;
@@ -29,28 +28,6 @@ angular.module('app').factory('UserData', function ($log, $q, UserMapping, Reque
               data: 'Last Name not found'
             })
           });
-        } else if (role == 'customer') {
-          Customer.getCustomerById(id).then(function (customer) {
-            var successLogin = false;
-            console.log(customer);
-            angular.forEach(customer.data, function (value) {
-              if (angular.equals(value, customer.data[0])) {
-                successLogin = true;
-              } else {
-                $log.log(value, customer.data[0])
-              }
-            });
-            successLogin ? q.resolve({
-              data: customer.data[0]
-            }) : q.reject({
-              data: 'Error'
-            });
-          }, function (err) {
-            q.reject({
-              data: 'Error'
-            })
-          });
-        }
         return q.promise;
     };
     //Get Außendienstmitarbeiter by id
