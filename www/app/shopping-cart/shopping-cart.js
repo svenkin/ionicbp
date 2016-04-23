@@ -9,10 +9,15 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
             }
         })
     })
-    .controller('ShoppingCartCtrl', function ($scope, $log, $ionicHistory, $timeout, localStorageService, shoppingCart, $ionicModal, Customer, newOrder, $ionicLoading, $ionicContentBanner, $state) {
+    .controller('ShoppingCartCtrl', function ($scope, $log, $rootScope, $ionicHistory, $timeout, localStorageService, shoppingCart, $ionicModal, Customer, newOrder, $ionicLoading, $ionicContentBanner, $state) {
         $scope.data = {};
         $scope.data.price = shoppingCart.getFullPrice();
         $scope.data.cart = localStorageService.get('shopping-cart');
+        $rootScope.$on('item-added-cart',
+          function () {
+            $scope.data.cart = localStorageService.get('shopping-cart');
+            $scope.data.price = shoppingCart.getFullPrice();
+          });
         var customerId = 0;
 
         $scope.changeQuantity = function (id, quantity) {

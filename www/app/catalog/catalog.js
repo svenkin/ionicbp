@@ -9,7 +9,7 @@ angular.module('app.catalog', []).config(function ($stateProvider) {
       }
     })
   })
-  .controller('CatalogCtrl', function ($scope, $log, localStorageService, $state, shoppingCart, $rootScope, $ionicContentBanner, $ionicListDelegate) {
+  .controller('CatalogCtrl', function ($scope, $log, $ionicHistory, localStorageService, $state, shoppingCart, $rootScope, $ionicContentBanner, $ionicListDelegate) {
     $scope.allProducts = [];
     $scope.allProducts = localStorageService.get('Items');
     $scope.price = shoppingCart.getFullPrice();
@@ -18,6 +18,9 @@ angular.module('app.catalog', []).config(function ($stateProvider) {
         $scope.price = shoppingCart.getFullPrice();
       });
     $scope.gotoCart = function () {
+      $ionicHistory.nextViewOptions({
+        historyRoot: true
+      });
       $state.go('app.shoppingCart');
     };
     $scope.colors = {
