@@ -38,7 +38,8 @@ angular.module('app', [
       var user = localStorageService.get('user') || 'fail';
       if (user !== 'fail') {
           localStorageService.remove('shopping-cart');
-        $state.go('app.dashboard')
+//        $state.go('app.dashboard')
+          $state.go('login');
       } else {
         $state.go('login');
         localStorageService.clearAll();

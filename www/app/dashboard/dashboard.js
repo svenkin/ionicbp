@@ -21,12 +21,10 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             }
         });
         $scope.data = {};
-
+//        $log.log(Orders.getAllOrdersCustomer(20001))
         function loadData() {
-            console.log('Lade daten')
             $scope.$on('$ionicView.beforeEnter', function () {
                 if (stateBefore === 'login') {
-                    console.log('show')
                     $ionicLoading.show({
                         template: '<div style="text-align:center">Lade Daten...<br/><ion-spinner icon="spiral"></ion-spinner></div>'
                     });
@@ -38,7 +36,7 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
                 $scope.data.orders = ordered.splice(0, 5);
                 $scope.data.user = localStorageService.get('user');
                 rawData = localStorageService.get("orders");
-                test(rawData);
+                chart(rawData);
                 $timeout(function () {
                     $ionicLoading.hide();
                     $scope.$apply();
@@ -59,7 +57,7 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
                 rawData = localStorageService.get("orders");
                 $scope.data.user = localStorageService.get('user');
                 $scope.data.orders = ordered.splice(0, 5);
-                test(rawData);
+                chart(rawData);
                 $timeout(function () {
                     $scope.$broadcast('scroll.refreshComplete');
                     $scope.$apply();
@@ -70,7 +68,7 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             })
         }
 
-        function test(ordData) {
+        function chart(ordData) {
             chartDataArray = {
                 type: 'areaspline',
                 showInLegend: false,

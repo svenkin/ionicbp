@@ -12,6 +12,7 @@ angular.module('app.login', []).config(function ($stateProvider) {
       name: "",
       id: ""
     };
+    $scope.data.login = 'mitarbeiter'
     $ionicSideMenuDelegate.canDragContent(false);
     $scope.login = function () {
       $ionicLoading.show({

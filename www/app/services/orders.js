@@ -20,7 +20,51 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
         })
         return q.promise;
     }
+    
+    service.getAllOrdersCustomer = function(id){
+          var q = $q.defer()
+        service.getOrdersByCust(id).then(function (ord) {
+            $log.log(ord);
+            service.getAllItems().then(function (suc) {
+                var merged = service.mergeOrderAndItems(ord.data);
+                localStorageService.set('orders', merged);
+                q.resolve(merged);
+            }, function (err) {
+                q.reject(err);
+            });
 
+        }, function (err) {
+            q.reject(err);
+        })
+        return q.promise;
+    }
+    
+    service.getOrdersByCust = function(id){
+         var q = $q.defer();
+        RequestFactory.get(baseUrl + '/api/Order', {
+            reqParams: {
+                params: {
+                    customerID: id
+                }
+            }
+        }).then(function (suc) {
+            $log.log('item',suc);
+            OrderMapping.mapOrders(suc.data).then(function (items) {
+                
+                q.resolve({
+                    data: items.data,
+                    status: suc.response.status
+                });
+            }, function (err) {
+                q.reject(err)
+            });;
+        }, function (err) {
+            q.reject(err);
+        });
+        return q.promise;
+    }
+    
+    
 
     service.getOrdersByMbid = function (id) {
         var q = $q.defer();

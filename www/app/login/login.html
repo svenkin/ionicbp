@@ -1,5 +1,37 @@
 <ion-view hide-back-button="true" hide-nav-bar="false">
-  <ion-content>
+    <ion-content>
+        <div class="card">
+            <div class="item">
+                Willkommen in unserer App
+            </div>
+            <ul class="list">
+                <li class="item item-input item-select">
+                    <div class="input-label">
+                        Ich bin
+                    </div>
+                    <select ng-model="data.login">
+                        <option value="mitarbeiter">Mitarbeiter</option>
+                        <option value="kunde">Kunde</option>
+                    </select>
+                </li>
+                <li>
+                    <label class="item item-input">
+                        <input type="number" placeholder="Meine Id">
+                    </label>
+                </li>
+                <li ng-show="data.login === 'mitarbeiter'">
+                    <label class="item item-input">
+                        <input type="text" placeholder="Mein Name">
+                    </label>
+                </li>
+            </ul>
+            <div class="item">
+                <button class="button button-full button-energized">
+                    Login
+                </button>
+            </div>
+        </div>
+        <!--
       <h1>Login</h1>
       <label class="item item-input">
         <span class="input-label">Benutzer-ID</span>
@@ -16,5 +48,6 @@
       <button class="button button-full button-energized" ng-click="login()">
         Login
       </button>
-  </ion-content>
+-->
+    </ion-content>
 </ion-view>
