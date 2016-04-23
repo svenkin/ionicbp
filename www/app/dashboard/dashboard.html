@@ -1,20 +1,31 @@
-
-  <ion-view hide-back-button="true" title="Dashboard">
+<ion-view hide-back-button="true" title="Dashboard">
     <ion-content>
-       <ion-refresher
-    pulling-text="Pull to refresh Dashboard ..."
-    on-refresh="refresh()">
-  </ion-refresher>
+        <ion-refresher pulling-text="Pull to refresh Dashboard ..." on-refresh="refresh()">
+        </ion-refresher>
+        <div class="card" ng-show="data.user">
+            <div class="item item-text-wrap">
+                <h2>{{data.user.firstName}} {{data.user.lastName}}<span class="float-right">ID: {{data.user.fieldWorkerId}}</span></h2>
+                <p>Wohnort: {{data.user.postCode}} {{data.user.place}}</p>
+            </div>
+        </div>
+        <div >
+            <div>
+                <highchart id="chart1" config="chartConfig" class="span10"></highchart>
+            </div>
+            <div class="item range">
+                <input type="range" name="volume" ng-change="sliderChanged()" min="-3" max="{{data.maxValue}}" ng-model="data.sliderVal" value="0">
+            </div>
+        </div>
         <div class="card" ng-show="data.orders.length > 0">
             <div class="item item-text-wrap">
-             <h2>Ihr letzten 5 Bestellungen</h2>
-              <ul class="list" id="dashlist">
-            <li class="item" ng-repeat="orders in data.orders" ui-sref="app.dashboard-detail({id: orders.orderId})">
-                <h3>{{orders.customer.companyName}}</h3>
-                <p>{{orders.orderDate | date : 'short'}}</p>
-                <span class="badge badge-assertive">{{orders.networth}}€</span>
-            </li>
-        </ul>
+                <h2>Ihr letzten 5 Bestellungen</h2>
+                <ul class="list" id="dashlist">
+                    <li class="item" ng-repeat="orders in data.orders" ui-sref="app.dashboard-detail({id: orders.orderId})">
+                        <h3>{{orders.customer.companyName}}</h3>
+                        <p>{{orders.orderDate | date : 'short'}}</p>
+                        <span class="badge badge-assertive">{{orders.networth}}€</span>
+                    </li>
+                </ul>
             </div>
         </div>
 

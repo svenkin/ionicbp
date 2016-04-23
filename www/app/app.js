@@ -8,6 +8,7 @@ angular.module('app', [
     'ionic',
     'Requestfactory',
     'angular-momentjs',
+    'highcharts-ng',
     'app.menu',
     'app.login',
     'app.catalog',
@@ -36,6 +37,7 @@ angular.module('app', [
       }
       var user = localStorageService.get('user') || 'fail';
       if (user !== 'fail') {
+          localStorageService.remove('shopping-cart');
         $state.go('app.dashboard')
       } else {
         $state.go('login');
