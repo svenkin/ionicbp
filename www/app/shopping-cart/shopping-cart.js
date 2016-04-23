@@ -61,7 +61,7 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
         $scope.send = function () {
             if ($scope.data.custfound) {
                 newOrder.send(customerId).then(function (suc) {
-                    $log.log(suc);
+                    
                     localStorageService.remove('shopping-cart');
                     $ionicContentBanner.show({
                         autoClose: 3000,
@@ -96,6 +96,7 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
                 });
                 Customer.getCustomerById(val).then(function (suc) {
                     console.log(suc);
+                    $scope.data.customer = suc;
                     customerId = suc.customerId;
                     $timeout(function () {
                         $scope.data.style = {
@@ -109,6 +110,7 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
 
                 }, function (err) {
                     console.log(err);
+                    $scope.data.customer = {};
                     $timeout(function () {
                         $scope.data.style = {
                             border: "1px solid red"
@@ -120,6 +122,7 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
                     }, 500)
                 })
             } else {
+                $scope.data.customer = {};
                 $scope.data.loaded = false;
                 $scope.data.style = {
                     border: "none"

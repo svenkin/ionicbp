@@ -10,14 +10,16 @@
             <div class="item item-text-wrap">
                 <h2>Ihre Items</h2>
                 <ul class="list" id="dashlist">
-                    <li class="item" ng-repeat="data in data.cart">
-                        <img ng-src="../assets/img/{{ data.pictureId }}.png" />
-                        <div id="itemId"> ID: {{ data.itemId }}</div>
-                        <span id="kateg"> Kategorie: {{ data.productGroup }}</span> <span id="gesKosten">
-                        {{data.price}}€ X {{data.quantity}}stk = <span id="ges">{{data.price * data.quantity}}€</span></span>
+                    <li class="item" ng-repeat="cart in data.cart">
+                        <img ng-src="../assets/img/{{ cart.pictureId }}.png" />
+                        <div id="itemId"> ID: {{ cart.itemId }}</div>
+                        <span id="kateg"> Kategorie: {{ cart.productGroup }}</span> <span id="gesKosten">
+                        {{cart.price}}€ X {{cart.quantity}}stk = <span id="ges">{{cart.price * cart.quantity | number : 2}}€</span></span>
                         <div style="clear:both"></div>
                     </li>
-                    <li><span style="float:right;text-decoration: underline">Gesamtkosten: {{data.price}}€</span></li>
+                    <li><span style="float:right;text-decoration: underline">Gesamtkosten: {{data.price | number : 2}}€</span></li>
+                    <li ng-show="data.customer.customerDiscount"><span style="float:right;">Rabatt: {{data.customer.customerDiscount}}%: <span style="text-decoration:underline;">{{data.price * ((data.customer.customerDiscount/100)) | number : 2}}</span></span></li>
+                    <li ng-show="data.customer.customerDiscount"><span style="float:right;text-decoration:underline;color:green;">Neue Kosten:{{(data.price - (data.price * ((data.customer.customerDiscount/100)))) | number : 2}}€</span></li>
                 </ul>
             </div>
             <div class="item item-text-wrap">
