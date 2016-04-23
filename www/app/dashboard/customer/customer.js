@@ -37,7 +37,7 @@ angular.module('app.dashboard.customer', []).config(function ($stateProvider) {
                 var ordered = $filter('orderBy')(ord.data, 'orderId', true);
                 $log.log(ordered);
                 $scope.data.orders = ordered.splice(0, 5);
-                $scope.data.user = localStorageService.get('user');
+                  $scope.data.customer = localStorageService.get('costumer');
                 rawData = localStorageService.get("orders");
                 chart(rawData);
                 $timeout(function () {
@@ -58,7 +58,7 @@ angular.module('app.dashboard.customer', []).config(function ($stateProvider) {
             Orders.getOrdersByCust(id).then(function (ord) {
                 var ordered = $filter('orderBy')(ord, 'orderId', true);
                 rawData = localStorageService.get("orders");
-                $scope.data.user = localStorageService.get('user');
+                $scope.data.customer = localStorageService.get('costumer');
                 $scope.data.orders = ordered.splice(0, 5);
                 chart(rawData);
                 $timeout(function () {
