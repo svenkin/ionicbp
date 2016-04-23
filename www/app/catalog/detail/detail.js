@@ -14,6 +14,11 @@ angular.module('app.catalog.detail', []).config(function ($stateProvider) {
     })
   })
   .controller('DetailCtrl', function ($scope, $log, localStorageService, shoppingCart, $ionicContentBanner, $stateParams, $rootScope, $state) {
+    $scope.price = shoppingCart.getFullPrice();
+    $rootScope.$on('item-added-cart',
+      function () {
+        $scope.price = shoppingCart.getFullPrice();
+      });
     var id = $stateParams.id;
     $scope.gotoCart = function () {
       $state.go('app.shoppingCart');

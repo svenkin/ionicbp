@@ -9,9 +9,17 @@ angular.module('app.catalog', []).config(function ($stateProvider) {
       }
     })
   })
-  .controller('CatalogCtrl', function ($scope, $log, localStorageService, shoppingCart, $rootScope, $ionicContentBanner, $ionicListDelegate) {
+  .controller('CatalogCtrl', function ($scope, $log, localStorageService, $state, shoppingCart, $rootScope, $ionicContentBanner, $ionicListDelegate) {
     $scope.allProducts = [];
     $scope.allProducts = localStorageService.get('Items');
+    $scope.price = shoppingCart.getFullPrice();
+    $rootScope.$on('item-added-cart',
+      function () {
+        $scope.price = shoppingCart.getFullPrice();
+      });
+    $scope.gotoCart = function () {
+      $state.go('app.shoppingCart');
+    };
     $scope.colors = {
       'Ratiobohrer': 'category-green',
       'Spiralbohrer mit Morsekegel': 'category-red',
