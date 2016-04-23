@@ -7,6 +7,5 @@ plugins/
 
 .idea/
 platforms/
-resources/
 node_modules/
 .git/
