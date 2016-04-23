@@ -24,6 +24,7 @@ angular.module('app.login', []).config(function ($stateProvider) {
                     localStorageService.set('user', suc.data);
                     localStorageService.set('role', 'fieldWorker');
                     $ionicLoading.hide();
+                    $scope.userData = {};
                     $state.go('app.dashboard');
                     $ionicSideMenuDelegate.canDragContent(true);
                 }, function (error) {
@@ -40,9 +41,9 @@ angular.module('app.login', []).config(function ($stateProvider) {
                     $log.log(suc);
                     localStorageService.set('role', 'customer');
                     localStorageService.set('customer', suc);
-
                     $ionicSideMenuDelegate.canDragContent(true);
-                    $state.go('app.dashboard');
+                    $state.go('app.customerDashboard');
+                    $scope.userData = {};
                     $ionicLoading.hide();
                 }, function (err) {
                     $ionicContentBanner.show({

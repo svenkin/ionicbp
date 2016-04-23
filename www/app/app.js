@@ -16,6 +16,7 @@ angular.module('app', [
     'app.dashboard.detail',
     'app.shoppingCart',
     'app.dashboard',
+    'app.dashboard.customer',
     'jett.ionic.content.banner',
     'LocalStorageModule'
   ])
@@ -36,10 +37,15 @@ angular.module('app', [
         StatusBar.styleDefault();
       }
       var user = localStorageService.get('user') || 'fail';
-      if (user !== 'fail') {
+        var cust = localStorageService.get('customer') || 'fail';
+      if (user !== 'fail' || cust !== 'fail') {
           localStorageService.remove('shopping-cart');
-//        $state.go('app.dashboard')
-          $state.go('login');
+          if(user !== 'fail'){
+              $state.go('app.dashboard');
+          } else {
+               $state.go('app.customerDashboard');
+          }
+        
       } else {
         $state.go('login');
         localStorageService.clearAll();

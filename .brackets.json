@@ -1,5 +1,6 @@
 {
     "jscodehints.detectedExclusions": [
-        "C:/Users/Sven/Documents/gitProjects/ionicbp/gulpfile.js"
+        "C:/Users/Sven/Documents/gitProjects/ionicbp/gulpfile.js",
+        "moment.js"
     ]
 }

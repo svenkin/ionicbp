@@ -1,4 +1,4 @@
-angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFactory, OrderMapping, localStorageService, $timeout,$filter) {
+angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFactory, OrderMapping, localStorageService, $timeout, $filter) {
     var baseUrl = BaseUrl;
     var service = {};
     var itemList = [];
@@ -20,12 +20,14 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
         })
         return q.promise;
     }
-    
-    service.getAllOrdersCustomer = function(id){
-          var q = $q.defer()
+
+    service.getAllOrdersCustomer = function (id) {
+        var q = $q.defer()
         service.getOrdersByCust(id).then(function (ord) {
             $log.log(ord);
             service.getAllItems().then(function (suc) {
+                $log.log('items',suc.data)
+                localStorageService.set('Items', suc.data);
                 var merged = service.mergeOrderAndItems(ord.data);
                 localStorageService.set('orders', merged);
                 q.resolve(merged);
@@ -38,9 +40,9 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
         })
         return q.promise;
     }
-    
-    service.getOrdersByCust = function(id){
-         var q = $q.defer();
+
+    service.getOrdersByCust = function (id) {
+        var q = $q.defer();
         RequestFactory.get(baseUrl + '/api/Order', {
             reqParams: {
                 params: {
@@ -48,13 +50,17 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
                 }
             }
         }).then(function (suc) {
-            $log.log('item',suc);
+            $log.log('item', suc);
             OrderMapping.mapOrders(suc.data).then(function (items) {
-                
+                service.getAllItems().then(function(suc){
+                      var merged = service.mergeOrderAndItems(items.data);
+                localStorageService.set('orders', merged);
+                $log.log('mapped', merged);
                 q.resolve({
-                    data: items.data,
-                    status: suc.response.status
+                    data: items.data
                 });
+                })
+              
             }, function (err) {
                 q.reject(err)
             });;
@@ -63,8 +69,8 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
         });
         return q.promise;
     }
-    
-    
+
+
 
     service.getOrdersByMbid = function (id) {
         var q = $q.defer();
@@ -75,9 +81,9 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
                 }
             }
         }).then(function (suc) {
-            $log.log('item',suc);
+            $log.log('item', suc);
             OrderMapping.mapOrders(suc.data).then(function (items) {
-                
+
                 q.resolve({
                     data: items.data,
                     status: suc.response.status
@@ -95,7 +101,6 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
         var q = $q.defer();
         RequestFactory.get(baseUrl + 'api/Item').then(function (suc) {
             itemList = OrderMapping.mapItems(suc.data);
-            $log.log('list', itemList);
             localStorageService.add('Items', itemList);
             q.resolve({
                 data: itemList,
@@ -147,21 +152,26 @@ angular.module('app').factory('Orders', function ($log, $q, BaseUrl, RequestFact
 
     return service;
 });
-angular.module('app').factory('OrderMapping', function ($log, $q, Customer, $moment) {
+angular.module('app').factory('OrderMapping', function ($log, $q, Customer, $moment,localStorageService) {
     var service = {}
     service.mapOrders = function (orders) {
         var q = $q.defer();
         var mappedOrders = [];
+        var customerList = [];
         angular.forEach(orders, function (value) {
             var mappedOrder = {
                 customerId: value.CustomerID,
                 fieldWorkerId: value.FieldWorkerID,
                 orderDate: $moment(value.OrderDate, 'YYYYMMDD').fromNow(),
-                orderDateRaw : new Date(value.OrderDate),
+                orderDateRaw: new Date(value.OrderDate),
                 orderId: value.OrderID
             };
             Customer.getCustomerById(mappedOrder.customerId).then(function (suc) {
                 mappedOrder.customer = suc;
+//                if (customerList.indexOf(suc) < 0) {
+//                    $log.log('push');
+//                    customerList.push(suc);
+//                }
             }, function (err) {
                 q.reject(err);
             })
@@ -176,6 +186,7 @@ angular.module('app').factory('OrderMapping', function ($log, $q, Customer, $mom
             mappedOrder.items = items;
             mappedOrders.push(mappedOrder);
         })
+//        localStorageService.set('knownCustomer', customerList);
         q.resolve({
             data: mappedOrders
         });
