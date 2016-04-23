@@ -13,8 +13,11 @@ angular.module('app.catalog.detail', []).config(function ($stateProvider) {
       }
     })
   })
-  .controller('DetailCtrl', function ($scope, $log, localStorageService, shoppingCart, $ionicContentBanner, $stateParams, $rootScope) {
+  .controller('DetailCtrl', function ($scope, $log, localStorageService, shoppingCart, $ionicContentBanner, $stateParams, $rootScope, $state) {
     var id = $stateParams.id;
+    $scope.gotoCart = function () {
+      $state.go('app.shoppingCart');
+    };
     $scope.items = localStorageService.get('Items')[id];
     $scope.toShoppingCart = function () {
       shoppingCart.addItem($scope.items, 1);
