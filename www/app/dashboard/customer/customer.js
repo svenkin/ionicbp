@@ -35,6 +35,7 @@ angular.module('app.dashboard.customer', []).config(function ($stateProvider) {
             var id = localStorageService.get('customer').customerId || 'fail';
             Orders.getOrdersByCust(id).then(function (ord) {
                 var ordered = $filter('orderBy')(ord.data, 'orderId', true);
+                $log.log(ordered);
                 $scope.data.orders = ordered.splice(0, 5);
                 $scope.data.user = localStorageService.get('user');
                 rawData = localStorageService.get("orders");
