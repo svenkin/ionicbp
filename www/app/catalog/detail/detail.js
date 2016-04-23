@@ -27,13 +27,24 @@ angular.module('app.catalog.detail', []).config(function ($stateProvider) {
       $state.go('app.shoppingCart');
     };
     $scope.items = localStorageService.get('Items')[id];
+    $scope.data = {};
+    $scope.data.quantity = 1;
+
     $scope.toShoppingCart = function () {
-      shoppingCart.addItem($scope.items, 1);
-      $rootScope.$broadcast('item-added-cart');
-      $ionicContentBanner.show({
-        autoClose: 3000,
-        text: ['Element zum Warenkorb hinzugefügt'],
-        type: 'success'
-      });
+      if ($scope.data.quantity > 0) {
+        shoppingCart.addItem($scope.items, $scope.data.quantity);
+        $rootScope.$broadcast('item-added-cart');
+        $ionicContentBanner.show({
+          autoClose: 3000,
+          text: ['Element zum Warenkorb hinzugefügt'],
+          type: 'success'
+        });
+      } else {
+        $ionicContentBanner.show({
+          autoClose: 3000,
+          text: ['Gültige Zahl eingeben!'],
+          type: 'error'
+        });
+      }
     };
   });

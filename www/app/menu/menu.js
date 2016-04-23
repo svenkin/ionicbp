@@ -6,7 +6,7 @@ angular.module('app.menu', []).config(function ($stateProvider) {
             controller: 'AppCtrl'
         })
     })
-    .controller('AppCtrl', function ($scope, $log, $cordovaDialogs, localStorageService, $ionicContentBanner, $state, $rootScope, shoppingCart) {
+    .controller('AppCtrl', function ($scope, $log, $cordovaDialogs, localStorageService, $ionicContentBanner, $state, $rootScope, shoppingCart, localStorageService,$ionicHistory) {
         $rootScope.$on('item-added-cart',
             function () {
                 $scope.price = shoppingCart.getFullPrice();
@@ -24,5 +24,19 @@ angular.module('app.menu', []).config(function ($stateProvider) {
                 localStorageService.clearAll();
               }
             });
+        }
+        
+        $scope.goDashboard = function(){
+            var role = localStorageService.get("role");
+            $ionicHistory.nextViewOptions({
+            historyRoot: true
+          });
+            switch(role){
+                case "fieldWorker":
+                    $state.go('app.dashboard');
+                    break;
+                case 'customer':
+                    $state.go('app.customerDashboard');
+            }
         }
     });

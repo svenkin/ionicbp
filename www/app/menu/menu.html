@@ -22,7 +22,7 @@
         <ion-item menu-close ui-sref="app.shoppingCart" ng-class="{'disabled':!price}">
           <i class="ion-android-cart"></i><span class="badge badge-assertive">{{ !price ? '0' : price }}€</span>
         </ion-item>
-        <ion-item menu-close ui-sref="app.dashboard">
+        <ion-item menu-close ng-click="goDashboard()">
           Dashboard
         </ion-item>
         <ion-item menu-close ui-sref="app.catalog">

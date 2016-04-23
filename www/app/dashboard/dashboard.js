@@ -18,6 +18,7 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             if (from.name === 'login' && userRole === 'fieldWorker') {
                 stateBefore = from.name;
                 loadData();
+                chartDataArray.data = [];
             } else {
                 stateBefore = '';
             }
@@ -96,6 +97,8 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
                     lastDate = date;
                 }
             }
+            $scope.data.maxValue = chartDataArray.data.length -1;
+             $scope.data.sliderVal = chartDataArray.data.length -10;
             $scope.chartConfig = {
                 chart: {
                     type: 'areaspline'
@@ -156,7 +159,8 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
                 chartDataArray.data[chartDataArray.data.length - 1][1] += rawData[i].networth;
             } else {
                 //Check if array is sorted properly
-                if (dataInMs > new Date(date).getTime()) console.log("Fehler" + chartDataArray.data);
+//                if (dataInMs > new Date(date).getTime()){console.log("Fehler" + chartDataArray.data);} 
+
                 dataInMs = new Date(date).getTime();
                 chartDataArray.data.push([dataInMs, rawData[i].networth]);
                 lastDate = date;
@@ -165,13 +169,14 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
 
         //set slider values
         $scope.dataLength = chartDataArray.data.length;
+        $scope.data.sliderVal = chartDataArray.data.length;
         $scope.data = {};
         //        $scope.data.sliderVal = $scope.dataLength;
         //Set initial slider value
-        $scope.data.sliderVal = $scope.dataLength - 10;
+//    $log.log(chartDataArray.data.length - 10);
 
         //Set max slider value
-        $scope.data.maxValue = chartDataArray.data.length - 5;
+//        $scope.data.maxValue = chartDataArray.data.length - 5
 
 
         $scope.sliderChanged = function () {

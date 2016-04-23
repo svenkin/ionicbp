@@ -12,12 +12,13 @@ angular.module('app.dashboard.customer', []).config(function ($stateProvider) {
     .controller('CustomerDashboardCtrl', function ($scope, $log, UserData, Orders, Customer, $filter, $ionicLoading, $timeout, newOrder, localStorageService, $state, $rootScope) {
         var stateBefore = '';
         var rawData = localStorageService.get("orders") || [];
-        
+
         $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
             var userRole = localStorageService.get('role');
             if (from.name === 'login' && userRole === 'customer') {
                 stateBefore = from.name;
                 loadDataCust();
+                chartDataArray.data = [];
             } else {
                 stateBefore = '';
             }
@@ -37,7 +38,8 @@ angular.module('app.dashboard.customer', []).config(function ($stateProvider) {
                 var ordered = $filter('orderBy')(ord.data, 'orderId', true);
                 $log.log(ordered);
                 $scope.data.orders = ordered.splice(0, 5);
-                  $scope.data.customer = localStorageService.get('costumer');
+                $scope.data.customer = localStorageService.get("customer");
+                $log.log(localStorageService.get('costumer'));
                 rawData = localStorageService.get("orders");
                 chart(rawData);
                 $timeout(function () {
@@ -56,9 +58,9 @@ angular.module('app.dashboard.customer', []).config(function ($stateProvider) {
             var id = localStorageService.get('customer').customerId || 'fail';
             $scope.data.orders = [];
             Orders.getOrdersByCust(id).then(function (ord) {
-                var ordered = $filter('orderBy')(ord, 'orderId', true);
+                var ordered = $filter('orderBy')(ord.data, 'orderId', true);
                 rawData = localStorageService.get("orders");
-                $scope.data.customer = localStorageService.get('costumer');
+                $scope.data.customer = localStorageService.get("customer");
                 $scope.data.orders = ordered.splice(0, 5);
                 chart(rawData);
                 $timeout(function () {
@@ -85,17 +87,19 @@ angular.module('app.dashboard.customer', []).config(function ($stateProvider) {
             //Sort orders to display
             rawData = $filter('orderBy')(ordData, 'orderDateRaw', false);
             for (var i = 0; i < rawData.length; i++) {
-                date = rawData[i].orderDateRaw;
+                var date = rawData[i].orderDateRaw;
                 if (date == lastDate) {
                     chartDataArray.data[chartDataArray.data.length - 1][1] += rawData[i].networth;
                 } else {
                     //Check if array is sorted properly
-                    if (dataInMs > new Date(date).getTime()) console.log("Fehler" + chartDataArray.data);
+                    //                if (dataInMs > new Date(date).getTime()) console.log("Fehler" + chartDataArray.data);
                     dataInMs = new Date(date).getTime();
                     chartDataArray.data.push([dataInMs, rawData[i].networth]);
                     lastDate = date;
                 }
             }
+            $scope.data.maxValue = chartDataArray.data.length -1;
+             $scope.data.sliderVal = chartDataArray.data.length -10;
             $scope.chartConfig = {
                 chart: {
                     type: 'areaspline'
@@ -151,28 +155,29 @@ angular.module('app.dashboard.customer', []).config(function ($stateProvider) {
         var lastDate;
         //Sort orders to display
         var rawData = $filter('orderBy')(rawData, 'orderDateRaw', false);
+        $log.log('rawData', rawData);
         for (var i = 0; i < rawData.length; i++) {
             var date = rawData[i].orderDateRaw;
             if (date == lastDate) {
                 chartDataArray.data[chartDataArray.data.length - 1][1] += rawData[i].networth;
             } else {
                 //Check if array is sorted properly
-                if (dataInMs > new Date(date).getTime()) console.log("Fehler" + chartDataArray.data);
+                //                if (dataInMs > new Date(date).getTime()) console.log("Fehler" + chartDataArray.data);
                 dataInMs = new Date(date).getTime();
                 chartDataArray.data.push([dataInMs, rawData[i].networth]);
                 lastDate = date;
             }
         }
-
-        //set slider values
+        $log.log('dates', chartDataArray.data)
+            //set slider values
         $scope.dataLength = chartDataArray.data.length;
         $scope.data = {};
         //        $scope.data.sliderVal = $scope.dataLength;
         //Set initial slider value
-        $scope.data.sliderVal = $scope.dataLength - 10;
+        $scope.data.sliderVal = chartDataArray.data.length;
 
         //Set max slider value
-        $scope.data.maxValue = chartDataArray.data.length - 5;
+        //        $scope.data.maxValue = chartDataArray.data.length - 5;
 
 
         $scope.sliderChanged = function () {

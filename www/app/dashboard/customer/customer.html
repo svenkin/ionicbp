@@ -2,10 +2,10 @@
     <ion-content>
         <ion-refresher pulling-text="Pull to refresh Dashboard ..." on-refresh="refresh()">
         </ion-refresher>
-        <div class="card" ng-show="data.user" style="margin-top : 10px">
+        <div class="card"style="margin-top : 10px">
             <div class="item item-text-wrap">
-                <h2>{{data.customer.firstName}} {{data.customer.lastName}}<span class="float-right">ID: {{data.customer.fieldWorkerId}}</span></h2>
-                <p>Wohnort: {{data.customer.postCode}} {{data.customer.place}}</p>
+                <h2>{{data.customer.companyName}}<span class="float-right">ID: {{data.customer.customerId}}</span></h2>
+                <p>Ort: {{data.customer.postCode}} {{data.customer.place}}</p>
             </div>
         </div>
         <h4 style="margin-left:20px;">Volumen ihrer Bestellungen</h4>
