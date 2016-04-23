@@ -6,19 +6,23 @@ angular.module('app.menu', []).config(function ($stateProvider) {
             controller: 'AppCtrl'
         })
     })
-    .controller('AppCtrl', function ($scope, $log, localStorageService, $ionicContentBanner, $state, $rootScope, shoppingCart) {
+    .controller('AppCtrl', function ($scope, $log, $cordovaDialogs, localStorageService, $ionicContentBanner, $state, $rootScope, shoppingCart) {
         $rootScope.$on('item-added-cart',
             function () {
                 $scope.price = shoppingCart.getFullPrice();
             });
         $scope.logout = function () {
-            localStorageService.set('user', '');
-            $ionicContentBanner.show({
-                autoClose: 3000,
-                text: ['Erfolgreich ausgeloggt!'],
-                type: 'success'
+          $cordovaDialogs.confirm('Wirklich ausloggen?', 'Logout', ['Nein','Ja'])
+            .then(function(buttonIndex) {
+              if (buttonIndex == 1) {
+                $ionicContentBanner.show({
+                  autoClose: 3000,
+                  text: ['Erfolgreich ausgeloggt!'],
+                  type: 'success'
+                });
+                $state.go('login');
+                localStorageService.clearAll();
+              }
             });
-            $state.go('login');
-            localStorageService.clearAll();
         }
     });

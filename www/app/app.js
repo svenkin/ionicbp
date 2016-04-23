@@ -18,7 +18,8 @@ angular.module('app', [
     'app.dashboard',
     'app.dashboard.customer',
     'jett.ionic.content.banner',
-    'LocalStorageModule'
+    'LocalStorageModule',
+    'ngCordova'
   ])
 
   .run(function ($ionicPlatform, $moment, localStorageService, $state) {
@@ -45,7 +46,7 @@ angular.module('app', [
           } else {
                $state.go('app.customerDashboard');
           }
-        
+
       } else {
         $state.go('login');
         localStorageService.clearAll();
