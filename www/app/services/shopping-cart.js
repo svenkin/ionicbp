@@ -21,7 +21,6 @@ angular.module('app').factory('shoppingCart', function ($log, localStorageServic
       angular.forEach(cart, function (item) {
         price += item.price * item.quantity;
       });
-      console.log(price);
       return price;
     }
     else {

@@ -13,7 +13,7 @@ angular.module('app.catalog.detail', []).config(function ($stateProvider) {
       }
     })
   })
-  .controller('DetailCtrl', function ($scope, $log, localStorageService, shoppingCart, $ionicContentBanner, $stateParams, $rootScope, $state) {
+  .controller('DetailCtrl', function ($scope, $log, $ionicHistory, localStorageService, shoppingCart, $ionicContentBanner, $stateParams, $rootScope, $state) {
     $scope.price = shoppingCart.getFullPrice();
     $rootScope.$on('item-added-cart',
       function () {
@@ -21,6 +21,9 @@ angular.module('app.catalog.detail', []).config(function ($stateProvider) {
       });
     var id = $stateParams.id;
     $scope.gotoCart = function () {
+      $ionicHistory.nextViewOptions({
+        historyRoot: true
+      });
       $state.go('app.shoppingCart');
     };
     $scope.items = localStorageService.get('Items')[id];
