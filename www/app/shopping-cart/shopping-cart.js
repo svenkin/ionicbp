@@ -49,12 +49,19 @@ angular.module('app.shoppingCart', []).config(function ($stateProvider) {
     $scope.data.loaded = false;
     $scope.data.compName = "Kunden-Id";
 
+    $scope.clearCart = function(){
+        $scope.data.cart = {};
+        $scope.data.price = 0;
+        localStorageService.remove('shopping-cart');
+    }
+    
     $scope.closeModal = function () {
       $scope.modal.hide();
     };
     // Cleanup the modal when we're done with it!
     $scope.$on('$destroy', function () {
       $scope.modal.remove();
+        
     });
     // Execute action on hide modal
     $scope.$on('modal.hidden', function () {
