@@ -1,30 +1,30 @@
-angular.module('app.dashboard', []).config(function ($stateProvider) {
-        $stateProvider.state('app.dashboard', {
-            url: '/dashboard',
+angular.module('app.dashboard.customer', []).config(function ($stateProvider) {
+        $stateProvider.state('app.customerDashboard', {
+            url: '/dashboard/customer',
             views: {
                 'menuContent': {
-                    templateUrl: 'app/dashboard/dashboard.html',
-                    controller: 'DashboardCtrl'
+                    templateUrl: 'app/dashboard/customer/customer.html',
+                    controller: 'CustomerDashboardCtrl'
                 }
             }
         })
     })
-    .controller('DashboardCtrl', function ($scope, $log, UserData, Orders, Customer, $filter, $ionicLoading, $timeout, newOrder, localStorageService, $state, $rootScope) {
+    .controller('CustomerDashboardCtrl', function ($scope, $log, UserData, Orders, Customer, $filter, $ionicLoading, $timeout, newOrder, localStorageService, $state, $rootScope) {
         var stateBefore = '';
         var rawData = localStorageService.get("orders") || [];
-       
+        
         $rootScope.$on('$stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-             var userRole = localStorageService.get('role');
-            if (from.name === 'login' && userRole === 'fieldWorker') {
+            var userRole = localStorageService.get('role');
+            if (from.name === 'login' && userRole === 'customer') {
                 stateBefore = from.name;
-                loadData();
+                loadDataCust();
             } else {
                 stateBefore = '';
             }
         });
         $scope.data = {};
         //        $log.log(Orders.getAllOrdersCustomer(20001))
-        function loadData() {
+        function loadDataCust() {
             $scope.$on('$ionicView.beforeEnter', function () {
                 if (stateBefore === 'login') {
                     $ionicLoading.show({
@@ -32,30 +32,29 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
                     });
                 }
             })
-            var id = localStorageService.get('user').fieldWorkerId || 'fail';
-            Orders.getAllOrders(id).then(function (ord) {
-                var ordered = $filter('orderBy')(ord, 'orderId', true);
+            var id = localStorageService.get('customer').customerId || 'fail';
+            Orders.getOrdersByCust(id).then(function (ord) {
+                var ordered = $filter('orderBy')(ord.data, 'orderId', true);
                 $scope.data.orders = ordered.splice(0, 5);
                 $scope.data.user = localStorageService.get('user');
                 rawData = localStorageService.get("orders");
                 chart(rawData);
                 $timeout(function () {
-                    $scope.$apply();
                     $ionicLoading.hide();
+                    $scope.$apply();
                 }, 500)
 
             }, function (err) {
-                $ionicLoading.hide();
                 $log.log(err);
+                $ionicLoading.hide();
             })
         };
-        loadData();
+        loadDataCust();
 
         $scope.refresh = function () {
-            var id = localStorageService.get('user') || 'fail';
-            id = id.fieldWorkerId;
+            var id = localStorageService.get('customer').customerId || 'fail';
             $scope.data.orders = [];
-            Orders.getAllOrders(id).then(function (ord) {
+            Orders.getOrdersByCust(id).then(function (ord) {
                 var ordered = $filter('orderBy')(ord, 'orderId', true);
                 rawData = localStorageService.get("orders");
                 $scope.data.user = localStorageService.get('user');
@@ -135,6 +134,7 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
                     text: null
                 }
             }
+            $scope.sliderChanged();
         }
 
 

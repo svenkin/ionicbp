@@ -1,20 +1,37 @@
 <ion-view title="Einkaufswagen">
-  <ion-content>
-    <ion-list>
-      <ion-item ng-repeat="item in data.cart">
-        <ion-option-button class="button-assertive"
-                           ng-click="remove(item.itemId)">
-          <i class="icon ion-ios-trash-outline"></i>
-        </ion-option-button>
-        ID: {{ item.itemId }}
-        <input type="number" ng-model="item.quantity" ng-change="changeQuantity(item.itemId, item.quantity)">
-        Preis: {{ (item.price * item.quantity | number:2) * 1 }}€
-      </ion-item>
-    </ion-list>
-    <div class="card">
-      <div class="item item-text-wrap"  ng-click="sendOrder()">
-        Gesamtpreis: {{ (data.price | number:2) * 1 }}€   <i class="ion-android-cart"></i>
-      </div>
-    </div>
-  </ion-content>
+    <ion-content>
+        <ion-list class="sendOrder">
+            <ion-item ng-repeat="item in data.cart">
+                <ion-option-button class="button-assertive" ng-click="remove(item.itemId)">
+                    <i class="icon ion-ios-trash-outline"></i>
+                </ion-option-button>
+                <img ng-src="../assets/img/{{ item.pictureId }}.png" />
+                <div>
+                    <span> Kategorie: {{ item.productGroup }}</span>
+                    <span class="itemId"> ID: {{ item.itemId }}</span>
+                    <div style="clear : both;"></div>
+                </div>
+
+                <span class="gesKosten" style="margin-top: 5px;">
+                    <span style="margin-right: 10px">{{item.price}}€  x</span>
+                <input class="inputK" style="
+                  font-size: 16pt;
+                  margin-top: -7px;
+                  padding : 0;
+    width: 50px;
+    margin-bottom: 10px;
+    text-align: right;
+    display: inline;" 
+               type="number" ng-model="item.quantity" ng-change="changeQuantity(item.itemId, item.quantity)">Stk = <span class="ges">{{item.price * item.quantity | number : 2}}€</span></span>
+                <div style="clear:both"></div>
+
+            </ion-item>
+        </ion-list>
+        <div class="card">
+            <div class="item item-text-wrap" ng-click="sendOrder()">
+                Gesamtpreis: {{ data.price | number:2 }}€ <i class="ion-android-cart"></i> <button style="float: right" class="button button-energized">Zur Bestellung</button>
+                <div style="clear : both;"></div>
+            </div>
+        </div>
+    </ion-content>
 </ion-view>

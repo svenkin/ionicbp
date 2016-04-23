@@ -26,8 +26,9 @@ angular.module('app').factory('Customer', function ($log, $q, RequestFactory, Ba
 });
 angular.module('app').factory('CustomerMapping', function () {
     var service = {};
+    var customerList = [];
     service.mapCustomer = function (customer) {
-        return {
+        var newCustomer = {
             companyName: customer.CompanyName,
             customerDiscount: customer.CustomerDiscount,
             customerId: customer.CustomerID,
@@ -37,6 +38,8 @@ angular.module('app').factory('CustomerMapping', function () {
             saleReserve: customer.SaleReserve,
             street: customer.Street
         }
+        
+        return newCustomer;
     }
 
     return service;
