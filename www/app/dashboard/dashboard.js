@@ -22,6 +22,11 @@ angular.module('app.dashboard', []).config(function ($stateProvider) {
             } else {
                 stateBefore = '';
             }
+            if (from.name === 'app.shoppingCart' && userRole === 'fieldWorker') {
+                stateBefore = from.name;
+                loadData();
+                chartDataArray.data = [];
+            }
         });
         $scope.data = {};
         //        $log.log(Orders.getAllOrdersCustomer(20001))

@@ -1,4 +1,4 @@
-<ion-view title="Detail {{ items.itemId }}">
+<ion-view title="Bestllung {{ items.itemId }}">
   <ion-nav-buttons side="right">
     <button class="button icon ion-android-cart" ng-class="{'disabled': !price}" ng-click="gotoCart()">
     </button>
@@ -29,7 +29,7 @@
         Kategorie: {{ items.productGroup }}
       </div>
     </div>
-    <div class="item-input-inset">
+    <div class="item-input-inset" ng-class="{'disabled':data.isCustomer}">
       <input style="    width: 50px;
     text-align: right;
     border: 1px solid;

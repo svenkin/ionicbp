@@ -26,6 +26,15 @@ angular.module('app.catalog.detail', []).config(function ($stateProvider) {
       });
       $state.go('app.shoppingCart');
     };
+    $scope.data = {};
+    $scope.data.isCustomer = false;
+    $scope.$on('$ionicView.beforeEnter',function(){
+        if(localStorageService.get("role") === 'customer'){
+            $scope.data.isCustomer = true;
+        }
+        
+    })
+    
     $scope.items = localStorageService.get('Items')[id];
     $scope.data = {};
     $scope.data.quantity = 1;

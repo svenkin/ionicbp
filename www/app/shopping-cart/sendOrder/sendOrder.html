@@ -38,8 +38,7 @@
                 </label>
 
             </div>
-            <div class="item">
-                <button class="button button-assertive" ng-click="closeModal()">Stornieren</button>
+            <div class="item"  ng-class="{'disabled':!data.canSend}">
                 <button style="float:right;" class="button button-balanced" ng-click="send()">Absenden</button>
             </div>
 

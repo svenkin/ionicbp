@@ -22,6 +22,7 @@ angular.module('app.menu', []).config(function ($stateProvider) {
                 });
                 $state.go('login');
                 localStorageService.clearAll();
+                  $rootScope.$broadcast('item-added-cart');
               }
             });
         }
