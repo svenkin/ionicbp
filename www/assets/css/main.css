@@ -9807,3 +9807,13 @@ a.button {
 .sendOrder #kundenId {
   width: 100%;
   text-align: right; }
+
+.sendOrder #gesKosten {
+  float: right;
+  margin-right: -10px; }
+  .sendOrder #gesKosten #ges {
+    text-decoration: underline; }
+
+.sendOrder #itemId {
+  float: right;
+  margin-right: 5px; }
