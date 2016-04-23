@@ -8,12 +8,12 @@
         </ion-option-button>
         ID: {{ item.itemId }}
         <input type="number" ng-model="item.quantity" ng-change="changeQuantity(item.itemId, item.quantity)">
-        Preis: {{ item.price * item.quantity }}€
+        Preis: {{ (item.price * item.quantity | number:2) * 1 }}€
       </ion-item>
     </ion-list>
     <div class="card">
       <div class="item item-text-wrap"  ng-click="sendOrder()">
-        Gesamtpreis: {{ data.price }}€   <i class="ion-android-cart"></i>
+        Gesamtpreis: {{ (data.price | number:2) * 1 }}€   <i class="ion-android-cart"></i>
       </div>
     </div>
   </ion-content>
