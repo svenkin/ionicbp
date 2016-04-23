@@ -6,15 +6,15 @@
   <ion-content>
     <ion-list>
       <ion-item ng-repeat="product in allProducts" ui-sref="app.catalog-detail({id: product.itemId})">
-        <div class="categories" ng-class="colors[product.productGroup]"></div>
-        <img ng-src="../assets/img/{{ product.pictureId }}.png"/><br>
-        <!--<img ng-src="../www/assets/img/{{ product.pictureId }}.png"/><br>-->
-        ID: {{ product.itemId }}<br>
-        Kategorie: {{ product.productGroup }}
-        <ion-option-button class="button-positive"
-                           ng-click="toCart(product)">
-          Warenkorb
-        </ion-option-button>
+      <div class="categories" ng-class="colors[product.productGroup]"></div>
+      <img ng-src="../assets/img/{{ product.pictureId }}.png"/>
+      <span class="badge badge-assertive">{{ product.price }}€</span><br>
+      <!--<img ng-src="../www/assets/img/{{ product.pictureId }}.png"/><br>-->
+      {{ product.productGroup }}<span class="item-right">ID: {{ product.itemId }}</span>
+      <ion-option-button class="button-positive"
+                         ng-click="toCart(product)">
+        Warenkorb
+      </ion-option-button>
       </ion-item>
     </ion-list>
   </ion-content>
